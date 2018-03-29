@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "658139264900",
+    "firebase_url": "https://centralcarregamentosmartphones.firebaseio.com",
+    "project_id": "centralcarregamentosmartphones",
+    "storage_bucket": "centralcarregamentosmartphones.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658139264900:android:ff1f0e4b8f5a8c92",
+        "android_client_info": {
+          "package_name": "com.unb.pi2.centraldecarregamentodesmartphonesautonomo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658139264900-rtl29t6233ld7651a6ihmt783dolsq2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfSrHf6Qt57WgVLksVIVnGImDpAPeCjVs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
