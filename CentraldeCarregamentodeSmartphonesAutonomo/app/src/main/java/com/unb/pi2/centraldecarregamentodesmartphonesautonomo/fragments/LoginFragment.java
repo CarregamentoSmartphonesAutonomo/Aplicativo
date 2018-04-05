@@ -1,73 +1,102 @@
 package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments;
 
-import android.content.Context;
-import android.net.Uri;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.MainActivity;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements View.OnClickListener{
 
-    private OnFragmentInteractionListener mListener;
+    private EditText etEmail;
+    private EditText etPassword;
+    private Button btLogin;
+    private TextView tvUserRegister;
 
-    public LoginFragment() {
-        // Required empty public constructor
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static LoginFragment newInstance(String param1, String param2) {
-        LoginFragment fragment = new LoginFragment();
-        Bundle args = new Bundle();
-
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
-    }
+    private FirebaseAuth firebaseAuth;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_login, container, false);;
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        firebaseAuth = FirebaseAuth.getInstance();
+
+
+        etEmail = (EditText) view.findViewById(R.id.login_email_et);
+        etPassword = (EditText) view.findViewById(R.id.login_password_et);
+        btLogin = (Button) view.findViewById(R.id.login_bt);
+        tvUserRegister = (TextView) view.findViewById(R.id.user_register_tv);
+
+        progressDialog = new ProgressDialog(getActivity());
+
+        btLogin.setOnClickListener(this);
+        tvUserRegister.setOnClickListener(this);
+
+
+
+        return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+    public void onClick(View view) {
+        if(view == btLogin){
+            login();
+        }
+        else if (view == tvUserRegister){
+            //TODO: Fazer Transição de Fragment
+
+            UserRegisterFragment userRegisterFragment= new UserRegisterFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_fl, userRegisterFragment)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+    // ------------ Created Methods ------------
+    private void login(){
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        // Validation
+        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
+            Toast.makeText(getActivity(),"É necessário preencher todos os campos",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progressDialog.setMessage("Validando");
+        progressDialog.show();
+
+        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(getActivity(),
+                new OnCompleteListener<AuthResult>() {
+
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                progressDialog.dismiss();
+                if(task.isSuccessful()){
+                    // Start Main Activity
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    getActivity().startActivity(intent);
+                }
+            }
+        });
     }
 }
