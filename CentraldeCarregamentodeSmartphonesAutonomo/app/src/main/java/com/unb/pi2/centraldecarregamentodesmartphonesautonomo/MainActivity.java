@@ -46,19 +46,14 @@ public class MainActivity extends AppCompatActivity {
         initFirebase();
         eventDatabase();
 
-        listDados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        listDados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 userSelect = (User)adapterView.getItemAtPosition(position);
                 editName.setText(userSelect.getName());
                 editEmail.setText(userSelect.getEmail());
                 editCpf.setText(userSelect.getCpf());
                 editPassword.setText(userSelect.getPassword());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
     }
