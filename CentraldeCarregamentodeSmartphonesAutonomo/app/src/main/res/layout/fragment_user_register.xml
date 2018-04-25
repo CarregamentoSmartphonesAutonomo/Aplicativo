@@ -13,6 +13,14 @@
         android:padding="16dp">
 
         <EditText
+            android:id="@+id/user_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Name"
+            android:inputType="textPersonName" />
+
+        <EditText
             android:id="@+id/user_cpf_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,12 +43,18 @@
             android:ems="10"
             android:hint="Senha"
             android:inputType="numberPassword" />
+        
+        <ListView
+            android:id="@+id/listDados"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <Button
             android:id="@+id/register_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cadastrar" />
+
     </LinearLayout>
 
 </FrameLayout>

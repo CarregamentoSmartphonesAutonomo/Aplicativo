@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/button2"
@@ -14,4 +14,6 @@
         android:text="Logout"
         tools:layout_editor_absoluteX="136dp"
         tools:layout_editor_absoluteY="382dp" />
+
+
 </android.support.constraint.ConstraintLayout>

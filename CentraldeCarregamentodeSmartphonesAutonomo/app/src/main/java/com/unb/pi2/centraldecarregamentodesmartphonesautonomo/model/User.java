@@ -18,7 +18,7 @@ public class User {
         return name;
     }
 
-    private void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -26,7 +26,7 @@ public class User {
         return email;
     }
 
-    private void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -34,7 +34,7 @@ public class User {
         return cpf;
     }
 
-    private void setCpf(int cpf) {
+    public void setCpf(int cpf) {
         this.cpf = cpf;
     }
 
@@ -42,7 +42,7 @@ public class User {
         return password;
     }
 
-    private void setPassword(int password) {
+    public void setPassword(int password) {
         this.password = password;
     }
 
