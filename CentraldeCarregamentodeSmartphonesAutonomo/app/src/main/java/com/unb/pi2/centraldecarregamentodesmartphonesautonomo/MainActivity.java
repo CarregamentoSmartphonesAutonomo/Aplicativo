@@ -9,13 +9,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     EditText editName, editCpf, editEmail, editPassword;
@@ -23,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
+    private List<User> listUser = new ArrayList<User>();
+    private ArrayAdapter<User> arrayAdapterUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,41 +40,38 @@ public class MainActivity extends AppCompatActivity {
         listDados = (ListView)findViewById(R.id.listDados);
 
         initFirebase();
+        eventDatabase();
     }
 
     private void initFirebase(){
 
         FirebaseApp.initializeApp(MainActivity.this);
         firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);
         databaseReference = firebaseDatabase.getReference();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-    getMenuInflater().inflate(R.menu.menu_main, menu);
-    return super.onCreateOptionsMenu(menu);
+    private void eventDatabase(){
+        databaseReference.child("User").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listUser.clear();
+                for (DataSnapshot objSnapshot:dataSnapshot.getChildren()){
+                    User user = objSnapshot.getValue(User.class);
+                    listUser.add(user);
+                }
+                arrayAdapterUser = new ArrayAdapter<User>(MainActivity.this, android.R.layout.simple_list_item_1, listUser);
+                listDados.setAdapter(arrayAdapterUser);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-        if(id == R.id.novo){
-            User newUser = new User();
-            newUser.setName(editName.getText().toString());
-            newUser.setCpf(editCpf.getText().toString());
-            newUser.setEmail(editEmail.getText().toString());
-            newUser.setPassword(editPassword.getText().toString());
-            databaseReference.child("User").child(newUser.getCpf()).setValue(newUser);
-            cleanFields();
-        }
-    return true;
 
-    }
-
-    private void cleanFields(){
-
-        editName.setText("");
-        editCpf.setText("");
-        editEmail.setText("");
-        editPassword.setText("");
-    }
 }
