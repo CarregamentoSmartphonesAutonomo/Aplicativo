@@ -4,6 +4,8 @@ package com.unb.pi2.centraldecarregamentodesmartphonesautonomo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
+    User userSelect;
+
     private List<User> listUser = new ArrayList<User>();
     private ArrayAdapter<User> arrayAdapterUser;
 
@@ -41,6 +45,22 @@ public class MainActivity extends AppCompatActivity {
 
         initFirebase();
         eventDatabase();
+
+        listDados.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                userSelect = (User)adapterView.getItemAtPosition(position);
+                editName.setText(userSelect.getName());
+                editEmail.setText(userSelect.getEmail());
+                editCpf.setText(userSelect.getCpf());
+                editPassword.setText(userSelect.getPassword());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void initFirebase(){
