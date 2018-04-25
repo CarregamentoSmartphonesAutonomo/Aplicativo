@@ -61,8 +61,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             login();
         }
         else if (view == tvUserRegister){
-            //TODO: Fazer Transição de Fragment
-
             UserRegisterFragment userRegisterFragment= new UserRegisterFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_fl, userRegisterFragment)

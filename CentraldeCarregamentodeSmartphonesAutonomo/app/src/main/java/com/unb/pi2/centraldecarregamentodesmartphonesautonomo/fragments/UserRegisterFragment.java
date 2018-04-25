@@ -31,7 +31,6 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
     private EditText etPassword;
 
     private FirebaseAuth firebaseAuth;
-
     public UserRegisterFragment() {
         // Required empty public constructor
     }
@@ -45,10 +44,10 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        btRegister = (Button) view.findViewById(R.id.register_bt);
-        etEmail = (EditText) view.findViewById(R.id.user_email_et);
-        etCpf = (EditText) view.findViewById(R.id.user_cpf_et);
-        etPassword = (EditText) view.findViewById(R.id.user_password_et);
+        btRegister = view.findViewById(R.id.register_bt);
+        etEmail = view.findViewById(R.id.user_email_et);
+        etCpf = view.findViewById(R.id.user_cpf_et);
+        etPassword = view.findViewById(R.id.user_password_et);
 
         btRegister.setOnClickListener(this);
 
