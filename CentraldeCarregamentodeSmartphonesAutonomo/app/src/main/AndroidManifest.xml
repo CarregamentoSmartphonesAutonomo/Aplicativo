@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
-                  android:theme="@style/Theme.AppCompat.NoActionBar">
+                  android:theme="@style/Theme.AppCompat.NoActionBar"
+                  android:label="Nome do app maroto">
 
         </activity>
     </application>
