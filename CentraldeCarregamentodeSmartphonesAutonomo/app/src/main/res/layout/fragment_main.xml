@@ -11,4 +11,16 @@
         android:layout_height="match_parent"
         android:text="Main Fragment" />
 
+    <Button
+        android:id="@+id/payment_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ff5100"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/payment_button"
+        android:textColor="#fff"
+        android:onClick="payment"/>
+
 </FrameLayout>

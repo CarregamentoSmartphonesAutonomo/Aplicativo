@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 
+import cn.carbs.android.library.MDDialog;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -25,6 +27,28 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
+    }
+
+    // ------------ Created Methods ------------
+    public void payment(View view){
+        new MDDialog.Builder(getActivity())
+                .setTitle("Pagamento")
+                .setContentView(R.layout.payment)
+                .setNegativeButton("Cancelar", new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .setPositiveButton("Cancelar", new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .create().show();
     }
 
 }
