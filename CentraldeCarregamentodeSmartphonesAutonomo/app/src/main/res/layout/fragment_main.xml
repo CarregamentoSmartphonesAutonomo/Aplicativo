@@ -21,6 +21,6 @@
         android:padding="10dp"
         android:text="@string/payment_button"
         android:textColor="#fff"
-        android:onClick="payment"/>
+        />
 
 </FrameLayout>
