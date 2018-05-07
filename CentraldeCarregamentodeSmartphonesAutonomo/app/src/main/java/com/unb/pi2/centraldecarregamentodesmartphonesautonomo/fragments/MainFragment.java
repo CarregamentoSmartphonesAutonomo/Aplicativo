@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.cooltechworks.creditcarddesign.CardEditActivity;
@@ -21,14 +23,12 @@ import cn.carbs.android.library.MDDialog;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MainFragment extends Fragment {
 
     private final int CREATE_NEW_CARD = 0;
 
     private LinearLayout cardContainer;
+    private View view;
 
     public MainFragment() {
         // Required empty public constructor
@@ -39,7 +39,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        view = inflater.inflate(R.layout.fragment_main, container, false);
 
         Button paymentButton = view.findViewById(R.id.payment_bt);
         paymentButton.setOnClickListener(new View.OnClickListener() {
@@ -92,10 +92,15 @@ public class MainFragment extends Fragment {
 
             Log.d("OnActivityResult", "Entrou no método!");
 
-            String name = data.getStringExtra(CreditCardUtils.EXTRA_CARD_HOLDER_NAME);
-            String cardNumber = data.getStringExtra(CreditCardUtils.EXTRA_CARD_NUMBER);
-            String expiry = data.getStringExtra(CreditCardUtils.EXTRA_CARD_EXPIRY);
-            String cvv = data.getStringExtra(CreditCardUtils.EXTRA_CARD_CVV);
+            final String name = data.getStringExtra(CreditCardUtils.EXTRA_CARD_HOLDER_NAME);
+            final String cardNumber = data.getStringExtra(CreditCardUtils.EXTRA_CARD_NUMBER);
+            final String expiry = data.getStringExtra(CreditCardUtils.EXTRA_CARD_EXPIRY);
+            final String expiryMonth = data.getStringExtra(CreditCardUtils.EXTRA_CARD_EXPIRY).substring(0,2);
+            final String expiryYear = data.getStringExtra(CreditCardUtils.EXTRA_CARD_EXPIRY).substring(3,5);
+            final String cvv = data.getStringExtra(CreditCardUtils.EXTRA_CARD_CVV);
+
+            /*Log.d("onActivityResult","Expiry Month-> " + expiryMonth);
+            Log.d("onActivityResult","Expiry Year-> " + expiryYear);*/
 
 
             final CreditCardView creditCardView = new CreditCardView(getContext());
@@ -128,10 +133,25 @@ public class MainFragment extends Fragment {
 
                         @Override
                         public void onClick(View v) {
+                            CreditCard creditCard = new CreditCard();
+                            creditCard.setCardNumber(cardNumber);
+                            creditCard.setName(name);
+                            creditCard.setMonth(expiryMonth);
+                            creditCard.setYear(expiryYear);
+                            creditCard.setCvv(cvv);
+
+                            getPaymentToken(creditCard);
                         }
                     })
                     .create().show();
         }
 
+    }
+
+    private void getPaymentToken(CreditCard creditCard){
+        WebView webView = view.findViewById(R.id.web_view);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(creditCard, "Android");
+        webView.loadUrl("");
     }
 }

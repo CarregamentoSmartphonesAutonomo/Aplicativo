@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src=
+        "https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js">
+    </script>
+    <script type="text/javascript">
+        PagSeguroDirectPayment.setSessionId('ID_DA_SESSÃO');
+    </script>
+</head>
+<body>
+    <script>
+        $(document).ready(function() {
+            var param = {
+                cardNumber: Android.getCardNumber(),
+                cvv: Android.getCvv(),
+                expirationMonth: Android.getMonth(),
+                expirationYear: Android.getYear(),
+                success: function(response) {
+                    //token gerado, esse deve ser usado na chamada da API do Checkout Transparente
+                    Android.setToken(response);
+                },
+                error: function(response) {
+                    //tratamento do erro
+                    Android.setError(response);
+                },
+                complete: function(response) {
+                    //tratamento comum para todas chamadas
+                }
+            }
+
+            PagSeguroDirectPayment.createCardToken(param);
+        });
+    </script>
+</body>
+</html>

@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Main Fragment" />
-
     <Button
         android:id="@+id/payment_bt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="#ff5100"
         android:gravity="center"
         android:padding="10dp"
@@ -23,4 +16,10 @@
         android:textColor="#fff"
         />
 
-</FrameLayout>
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_below="@+id/payment_bt"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp" />
+
+</RelativeLayout>

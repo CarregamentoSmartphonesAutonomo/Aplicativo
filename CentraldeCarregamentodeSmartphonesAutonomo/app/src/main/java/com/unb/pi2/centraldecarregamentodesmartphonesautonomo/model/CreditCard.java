@@ -1,5 +1,8 @@
 package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model;
 
+import android.util.Log;
+import android.webkit.JavascriptInterface;
+
 import java.util.Observer;
 
 public class CreditCard {
@@ -16,6 +19,7 @@ public class CreditCard {
         addObserver( observer );
     }*/
 
+    @JavascriptInterface
     public String getCardNumber() {
         return cardNumber;
     }
@@ -24,6 +28,7 @@ public class CreditCard {
         this.cardNumber = cardNumber;
     }
 
+    @JavascriptInterface
     public String getName() {
         return name;
     }
@@ -32,6 +37,7 @@ public class CreditCard {
         this.name = name;
     }
 
+    @JavascriptInterface
     public String getMonth() {
         return month;
     }
@@ -40,6 +46,7 @@ public class CreditCard {
         this.month = month;
     }
 
+    @JavascriptInterface
     public String getYear() {
         return year;
     }
@@ -48,6 +55,7 @@ public class CreditCard {
         this.year = year;
     }
 
+    @JavascriptInterface
     public String getCvv() {
         return cvv;
     }
@@ -68,15 +76,19 @@ public class CreditCard {
         return error;
     }
 
+    @JavascriptInterface
     public void setError(String error) {
         this.error = error;
+        Log.i("CreditCard", "Error -> " + error);
     }
 
     public String getToken() {
         return token;
     }
 
+    @JavascriptInterface
     public void setToken(String token) {
         this.token = token;
+        Log.i("CreditCard", "Token -> " + token);
     }
 }
