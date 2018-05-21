@@ -31,7 +31,7 @@ public class TelaListagemUsuarios {
                     .show();
             return;
         }
-        act.setContentView(R.layout.listagem_usuarios_cadastrados);
+        //act.setContentView(R.layout.listagem_usuarios_cadastrados);
         btanterior = (Button) act.findViewById(R.id.btanterior);
         btproximo = (Button) act.findViewById(R.id.btproximo);
         btfechar = (Button) act.findViewById(R.id.btfechar);

@@ -21,7 +21,7 @@ public class TelaCadastroUsuario {
 
     public void CarregarTela()
     {
-        act.setContentView(R.layout.cadastro_de_usuarios);
+        //act.setContentView(R.layout.cadastro_de_usuarios);
         ednome = (EditText) act.findViewById(R.id.ednome);
         edtelefone = (EditText) act.findViewById(R.id.edtelefone);
         edendereco = (EditText) act.findViewById(R.id.edendereco);
