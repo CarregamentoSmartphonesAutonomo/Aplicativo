@@ -3,9 +3,10 @@ package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import java.util.Observable;
 import java.util.Observer;
 
-public class CreditCard {
+public class CreditCard extends Observable {
     private String cardNumber;
     private String name;
     private String month;
@@ -15,9 +16,9 @@ public class CreditCard {
     private String error;
     private String token;
 
-    /*public CreditCard(Observer observer){
+    public CreditCard(Observer observer){
         addObserver( observer );
-    }*/
+    }
 
     @JavascriptInterface
     public String getCardNumber() {
@@ -77,9 +78,14 @@ public class CreditCard {
     }
 
     @JavascriptInterface
-    public void setError(String error) {
-        this.error = error;
+    public void setError(String... errors) {
+        for(String error : errors){
+            this.error = this.error + error;
+        }
         Log.i("CreditCard", "Error -> " + error);
+
+        setChanged();
+        notifyObservers();
     }
 
     public String getToken() {
@@ -90,5 +96,8 @@ public class CreditCard {
     public void setToken(String token) {
         this.token = token;
         Log.i("CreditCard", "Token -> " + token);
+
+        setChanged();
+        notifyObservers();
     }
 }

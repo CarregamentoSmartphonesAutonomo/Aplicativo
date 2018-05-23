@@ -2,7 +2,9 @@ package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,20 +12,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.cooltechworks.creditcarddesign.CardEditActivity;
 import com.cooltechworks.creditcarddesign.CreditCardUtils;
 import com.cooltechworks.creditcarddesign.CreditCardView;
+import com.google.gson.Gson;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.Utils.PaymentConnection;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.CreditCard;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import cn.carbs.android.library.MDDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.Activity.RESULT_OK;
 
-public class MainFragment extends Fragment {
+public class    MainFragment extends Fragment implements Observer {
 
     private final int CREATE_NEW_CARD = 0;
 
@@ -57,7 +69,13 @@ public class MainFragment extends Fragment {
         Log.d("payment", "Entrou no método");
 
         Intent intent = new Intent(getContext(), CardEditActivity.class);
-                        startActivityForResult(intent, CREATE_NEW_CARD);
+        intent.putExtra(CreditCardUtils.EXTRA_CARD_HOLDER_NAME, "PAIGE ADRIAN");
+        intent.putExtra(CreditCardUtils.EXTRA_CARD_NUMBER, "5185055284268687");
+        intent.putExtra(CreditCardUtils.EXTRA_CARD_EXPIRY, "03/19");
+        intent.putExtra(CreditCardUtils.EXTRA_CARD_SHOW_CARD_SIDE, CreditCardUtils.CARD_SIDE_BACK);
+        intent.putExtra(CreditCardUtils.EXTRA_CARD_CVV, "319");
+        intent.putExtra(CreditCardUtils.EXTRA_VALIDATE_EXPIRY_DATE, true);
+        startActivityForResult(intent, CREATE_NEW_CARD);
 
     }
 
@@ -99,8 +117,9 @@ public class MainFragment extends Fragment {
             final String expiryYear = data.getStringExtra(CreditCardUtils.EXTRA_CARD_EXPIRY).substring(3,5);
             final String cvv = data.getStringExtra(CreditCardUtils.EXTRA_CARD_CVV);
 
-            /*Log.d("onActivityResult","Expiry Month-> " + expiryMonth);
-            Log.d("onActivityResult","Expiry Year-> " + expiryYear);*/
+            Log.d("onActivityResult","Expiry Month-> " + expiryMonth);
+            Log.d("onActivityResult","Expiry Year-> " + expiryYear);
+            Log.d("onActivityResult", "CVV -> " + cvv);
 
 
             final CreditCardView creditCardView = new CreditCardView(getContext());
@@ -133,14 +152,16 @@ public class MainFragment extends Fragment {
 
                         @Override
                         public void onClick(View v) {
-                            CreditCard creditCard = new CreditCard();
+                            CreditCard creditCard = new CreditCard(MainFragment.this );
                             creditCard.setCardNumber(cardNumber);
                             creditCard.setName(name);
                             creditCard.setMonth(expiryMonth);
                             creditCard.setYear(expiryYear);
-                            creditCard.setCvv(cvv);
+                            creditCard.setCvv("771");
 
-                            getPaymentToken(creditCard);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                getPaymentToken(creditCard);
+                            }
                         }
                     })
                     .create().show();
@@ -148,10 +169,54 @@ public class MainFragment extends Fragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void getPaymentToken(CreditCard creditCard){
+        Log.d("getPaymentToken", "on method.");
         WebView webView = view.findViewById(R.id.web_view);
+        webView.loadUrl("file:///android_asset/index.html");
+        WebView.setWebContentsDebuggingEnabled(true);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(creditCard, "Android");
-        webView.loadUrl("");
+        Log.d("getPaymentToken", "leaving method.");
+    }
+
+    private void sendPaymentData(CreditCard creditCard){
+
+    }
+
+    private void showMessage(final String message){
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        CreditCard creditCard = (CreditCard) o;
+
+        Log.d("update", "On method.");
+        if(creditCard.getToken() == null){
+            showMessage(creditCard.getError());
+            return;
+        }
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://carregamentosmartphonesautonomo.github.io/PagamentosAPP-web-version/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        PaymentConnection paymentConnection = retrofit.create(PaymentConnection.class);
+        Call<String> call = paymentConnection.sendPayment(10, 1, creditCard.getToken());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d("onResponse", "Connected to server.");
+                Log.d("onResponse", "response.body() -> " + response.body());
+                showMessage(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("Main Fragment", t.getMessage());
+            }
+        });
     }
 }
