@@ -8,6 +8,7 @@
         app:showAsAction="never"
         />
 
+
     <item android:id="@+id/it_logout"
         android:title="Sair"
         android:orderInCategory="100"

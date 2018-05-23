@@ -5,10 +5,58 @@
     android:layout_height="match_parent"
     tools:context=".fragments.EditFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/user_register_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Edit Fragment" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/user_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nome"/>
+
+        <EditText
+            android:id="@+id/user_cpf_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="CPF"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/user_email_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/user_password_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Senha"
+            android:inputType="numberPassword" />
+
+        <Button
+            android:id="@+id/edit_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Editar" />
+
+        <Button
+            android:id="@+id/delete_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Excluir Conta"
+            android:background="#E33A24"/>
+
+    </LinearLayout>
 
 </FrameLayout>
