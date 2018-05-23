@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,23 @@ public class    MainFragment extends Fragment implements Observer {
         view = inflater.inflate(R.layout.fragment_main, container, false);
 
         Button paymentButton = view.findViewById(R.id.payment_bt);
+        Button charge = view.findViewById(R.id.rasp_connection_bt);
+        charge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create new fragment and transaction
+                Fragment newFragment = new CharginProcessFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack if needed
+                transaction.replace(R.id.fragment_container_fl, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            }
+        });
         paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +91,9 @@ public class    MainFragment extends Fragment implements Observer {
         intent.putExtra(CreditCardUtils.EXTRA_CARD_NUMBER, "5185055284268687");
         intent.putExtra(CreditCardUtils.EXTRA_CARD_EXPIRY, "03/19");
         intent.putExtra(CreditCardUtils.EXTRA_CARD_SHOW_CARD_SIDE, CreditCardUtils.CARD_SIDE_BACK);
-        intent.putExtra(CreditCardUtils.EXTRA_CARD_CVV, "319");
+        intent.putExtra(CreditCardUtils.EXTRA_CARD_CVV, "319" +
+                "" +
+                "");
         intent.putExtra(CreditCardUtils.EXTRA_VALIDATE_EXPIRY_DATE, true);
         startActivityForResult(intent, CREATE_NEW_CARD);
 

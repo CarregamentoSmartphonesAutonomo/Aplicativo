@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.MainFragment">
+
+    <Button
+        android:id="@+id/rasp_connection_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_color"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/start_charging_button"
+        android:textColor="#fff"
+        />
 
     <Button
         android:id="@+id/payment_bt"
@@ -22,4 +34,4 @@
         android:layout_width="0.1dp"
         android:layout_height="0.1dp" />
 
-</RelativeLayout>
+</LinearLayout>
