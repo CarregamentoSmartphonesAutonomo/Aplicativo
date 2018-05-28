@@ -10,7 +10,6 @@ public interface PaymentConnection {
     @POST("package/ctrl/CtrlPayment.php")
     Call<String> sendPayment(
             @Field("value") int value,
-            @Field("parcels") int parcels,
             @Field("token") String token
     );
 }

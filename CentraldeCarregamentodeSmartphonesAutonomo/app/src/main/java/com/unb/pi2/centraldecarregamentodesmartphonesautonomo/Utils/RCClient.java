@@ -11,9 +11,13 @@ import java.net.UnknownHostException;
 public class RCClient {
     public static final String SERVER_IP = "10.3.141.1";
 
-    Socket socket;
-    PrintWriter output;
-    BufferedReader input;
+    public Socket getSocket() {
+        return socket;
+    }
+
+    private Socket socket;
+    private PrintWriter output;
+    private BufferedReader input;
 
     public RCClient(){
         try {
@@ -28,8 +32,8 @@ public class RCClient {
         }
     }
 
-    public void turn(int pulseWidth) {
-        write(output, "pwAngle="+pulseWidth);
+    public void sendChargeStep(int chargeProcessStep) {
+        write(output, "chargeProcessStep="+chargeProcessStep);
     }
     void write(PrintWriter output, String message) {
         System.out.println("Sending: " +message);

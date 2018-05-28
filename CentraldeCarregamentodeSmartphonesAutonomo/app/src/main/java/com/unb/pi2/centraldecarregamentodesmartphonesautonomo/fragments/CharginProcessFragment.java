@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.Utils.RCClient;
 
+import java.io.DataInputStream;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -25,12 +27,38 @@ public class CharginProcessFragment extends Fragment {
             Log.d("ChargingProcessFragment","Thread run -> starting connection...");
             try  {
                 rcClient = new RCClient();
-                int oldPW = 0;
-                while (true){
-                    rcClient.turn(666);
-                    break;
+
+                // Send first command to raspberry
+                rcClient.sendChargeStep(666);
+
+                DataInputStream dIn = null;
+
+                // Receiving data response from raspberry
+                boolean done = false;
+                while(!done) {
+                    dIn = new DataInputStream(rcClient.getSocket().getInputStream());
+                    byte messageType = dIn.readByte();
+
+                    switch(messageType)
+                    {
+                        case 1: // Type A
+                            System.out.println("Message A: " + dIn.readUTF());
+                            break;
+                        case 2: // Type B
+                            System.out.println("Message B: " + dIn.readUTF());
+                            break;
+                        case 3: // Type C
+                            System.out.println("Message C [1]: " + dIn.readUTF());
+                            System.out.println("Message C [2]: " + dIn.readUTF());
+                            break;
+                        default:
+                            done = true;
+                    }
                 }
+
+                dIn.close();
                 rcClient.closeUp();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -24,6 +24,7 @@ import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.Utils.PaymentConnection;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.CreditCard;
 
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -72,12 +73,12 @@ public class    MainFragment extends Fragment implements Observer {
                 transaction.commit();
             }
         });
-        paymentButton.setOnClickListener(new View.OnClickListener() {
+        /*paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 payment(v);
             }
-        });
+        });*/
 
         return view;
     }
@@ -219,18 +220,27 @@ public class    MainFragment extends Fragment implements Observer {
         }
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://carregamentosmartphonesautonomo.github.io/PagamentosAPP-web-version/")
+                .baseUrl("https://fierce-basin-32562.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         PaymentConnection paymentConnection = retrofit.create(PaymentConnection.class);
-        Call<String> call = paymentConnection.sendPayment(10, 1, creditCard.getToken());
+        Call<String> call = paymentConnection.sendPayment(10, creditCard.getToken());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.d("onResponse", "Connected to server.");
-                Log.d("onResponse", "response.body() -> " + response.body());
-                showMessage(response.body());
+                if(response.isSuccessful()) {
+                    Log.d("onResponse", "response.body() -> " + response.body());
+                    showMessage(response.body());
+                }
+                else{
+                    try {
+                        Log.d("onResponse", "response is not successful -> " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override

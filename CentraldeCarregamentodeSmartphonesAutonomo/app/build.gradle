@@ -28,16 +28,18 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // API
-    implementation 'com.google.firebase:firebase-core:15.0.0'
-    implementation 'com.google.firebase:firebase-auth:15.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.0'
+    implementation 'com.google.firebase:firebase-auth:16.0.1'
 
     // Payment
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-
     implementation 'cn.carbs.android:MDDialog:1.0.0'
     implementation 'com.github.sharish:CreditCardView:v1.0.4'
+
+    // Graphs
+    implementation 'com.jjoe64:graphview:4.2.2'
 }
 
 apply plugin: 'com.google.gms.google-services'
