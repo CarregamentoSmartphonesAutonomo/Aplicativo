@@ -1,11 +1,31 @@
 <resources>
-    <string name="app_name">Central de Carregamento de Smartphones Autonomo</string>
-    <string name="payment_button">Realizar Pagamento</string>
-    <string name="start_charging_button">Carregar o celular</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="instructions1">1. Posicione-se em frente à câmera</string>
-    <string name="instructions2">2. Remova adereços e objetos que possam cobrir seu rosto, como máscaras ou óculos</string>
-    <string name="instructions3">3. Olhe para a câmera e mantenha o rosto parado</string>
+    <string name="app_name">CACELU</string>
+    <string name="action_sign_in_short">Cadastrar</string>
+    <string name="email">Email</string>
+    <string name="minimum_password">Senha muito curta, digite pelo menos 6 caracteres!</string>
+    <string name="auth_failed">Falha de autenticação, verifique seu email e senha ou inscreva-se</string>
+    <string name="change_email">Mudar email</string>
+    <string name="change_password">Mudar Senha</string>
+    <string name="send_password_reset_email">Enviar email de redefinição de senha</string>
+    <string name="remove_user">Remover usuário</string>
+    <string name="new_pass">Nova senha</string>
+    <string name="title_activity_profile">Firebase</string>
+    <string name="title_activity_login">Logar</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Senha</string>
+    <string name="hint_name">Nome completo</string>
+    <string name="btn_login">Entrar</string>
+    <string name="btn_link_to_register">Não é um membro? Registre-se aqui!</string>
+    <string name="btn_link_to_login">Voltar a tela de login!</string>
+    <string name="title_activity_reset_password">Redefinir atividade da senha</string>
+    <string name="btn_forgot_password">Esqueceu sua senha?</string>
+    <string name="btn_reset_password">Resetar senha</string>
+    <string name="btn_back"><![CDATA[<< Voltar]]></string>
+    <string name="hint_new_email">Novo email</string>
+    <string name="btn_change">Mudar</string>
+    <string name="btn_send">Enviar</string>
+    <string name="btn_remove">Remover</string>
+    <string name="btn_sign_out">Deslogar</string>
+    <string name="lbl_forgot_password">Esqueceu a senha?</string>
+    <string name="forgot_password_msg">Digite o seu e-mail já registrado para ser enviado instruções de redefinição de senha.</string>
 </resources>
