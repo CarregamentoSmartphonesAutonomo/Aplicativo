@@ -1,6 +1,7 @@
 package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.LoginActivity;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 
 /**
@@ -24,7 +26,7 @@ import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 public class EditFragment extends Fragment {
 
     private EditText oldEmail, newEmail, password, newPassword;
-    private Button btnEditUser;
+    private Button btnEditUser, btnRemoveUser;
     private FirebaseUser user;
 
 
@@ -46,6 +48,7 @@ public class EditFragment extends Fragment {
         newEmail = (EditText) view.findViewById(R.id.new_email);
         newPassword = (EditText) view.findViewById(R.id.new_Password);
         btnEditUser = (Button) view.findViewById(R.id.sending_edit_button);
+        btnRemoveUser = (Button) view.findViewById(R.id.remove_button);
 
         btnEditUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +60,27 @@ public class EditFragment extends Fragment {
                     } else {
                         updateUser();
                     }
+                }
+            }
+        });
+
+        btnRemoveUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user != null) {
+                    user.delete()
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(getActivity(), "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                                        getActivity().finish();
+                                    } else {
+                                        Toast.makeText(getActivity(), "Failed to delete your account!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
             }
         });
@@ -101,4 +125,6 @@ public class EditFragment extends Fragment {
                     });
         }
     }
+
+
 }

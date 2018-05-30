@@ -34,6 +34,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Atualizar" />
+
+        <Button
+            android:id="@+id/remove_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remover Usuário"
+            android:background="#E33A24"/>
     </LinearLayout>
 
 
