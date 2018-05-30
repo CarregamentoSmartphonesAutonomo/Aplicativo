@@ -27,6 +27,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private EditText etPassword;
     private Button btLogin;
     private TextView tvUserRegister;
+    private TextView tvSendEmail;
 
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
@@ -44,6 +45,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         etPassword = view.findViewById(R.id.login_password_et);
         btLogin = view.findViewById(R.id.login_bt);
         tvUserRegister = view.findViewById(R.id.user_register_tv);
+        tvSendEmail = view.findViewById(R.id.send_email);
 
         progressDialog = new ProgressDialog(getActivity());
 
