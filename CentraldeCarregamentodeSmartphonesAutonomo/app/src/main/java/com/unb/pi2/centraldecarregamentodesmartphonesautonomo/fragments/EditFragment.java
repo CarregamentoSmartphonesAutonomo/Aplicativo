@@ -55,23 +55,9 @@ public class EditFragment extends Fragment {
                     if (newPassword.getText().toString().trim().length() < 6) {
                         newPassword.setError("Password too short, enter minimum 6 characters");
                     } else {
-                        user.updatePassword(newPassword.getText().toString().trim())
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(getActivity(), "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
-                                            //signOut();
-                                        } else {
-                                            Toast.makeText(getActivity(), "Failed to update password!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                        updateUser();
                     }
-                } else if (newPassword.getText().toString().trim().equals("")) {
-                    newPassword.setError("Enter password");
                 }
-
             }
         });
 
