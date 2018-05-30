@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://assets.pagar.me/js/pagarme.min.js">
+    </script>
+</head>
+<body>
+    <script>
+        $(document).ready(function() {
+            PagarMe.encryption_key = "ek_test_PZS9xfVZVYadffIk1qjlH9QU5yjEoN";
+
+            var creditCard = new PagarMe.creditCard();
+            creditCard.cardHolderName = Android.getName();
+            creditCard.cardExpirationMonth = Android.getMonth();
+            creditCard.cardExpirationYear = Android.getYear();
+            creditCard.cardNumber = Android.getCardNumber();
+            creditCard.cardCVV = Android.getCvv();
+
+            var fieldErrors = creditCard.fieldErrors();
+
+            var errors = [], i = 0;
+            for(var field in fieldErrors) { errors[i++] = field; }
+
+            if(errors.length > 0) {
+                Android.setError(errors);
+            } else {
+                creditCard.generateHash(function(cardHash) {
+                    Android.setToken(cardHash);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

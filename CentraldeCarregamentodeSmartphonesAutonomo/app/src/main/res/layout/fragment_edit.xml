@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.EditFragment">
+
+    <LinearLayout
+        android:id="@+id/user_register_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/new_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/new_Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Senha"
+            android:inputType="numberPassword" />
+
+        <Button
+            android:id="@+id/sending_edit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Atualizar" />
+
+        <Button
+            android:id="@+id/remove_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remover Usuário"
+            android:background="#E33A24"/>
+    </LinearLayout>
+
+
+</FrameLayout>

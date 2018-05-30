@@ -35,15 +35,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);;
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        etEmail = (EditText) view.findViewById(R.id.login_email_et);
-        etPassword = (EditText) view.findViewById(R.id.login_password_et);
-        btLogin = (Button) view.findViewById(R.id.login_bt);
-        tvUserRegister = (TextView) view.findViewById(R.id.user_register_tv);
+        etEmail = view.findViewById(R.id.login_email_et);
+        etPassword = view.findViewById(R.id.login_password_et);
+        btLogin = view.findViewById(R.id.login_bt);
+        tvUserRegister = view.findViewById(R.id.user_register_tv);
 
         progressDialog = new ProgressDialog(getActivity());
 
@@ -61,8 +61,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             login();
         }
         else if (view == tvUserRegister){
-            //TODO: Fazer Transição de Fragment
-
             UserRegisterFragment userRegisterFragment= new UserRegisterFragment();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container_fl, userRegisterFragment)

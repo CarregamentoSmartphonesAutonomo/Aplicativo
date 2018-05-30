@@ -10,8 +10,6 @@ import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.LoginFra
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Fragment newFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,32 +25,10 @@ public class LoginActivity extends AppCompatActivity {
 
             // Create a new Fragment to be placed in the activity layout
             LoginFragment firstFragment = new LoginFragment();
-            newFragment = firstFragment;
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container_fl, firstFragment).commit();
-
-            //LinearLayout llMainMenu = (LinearLayout) findViewById(R.id.activity_main_cl);
         }
-
     }
-
-    // ------------ Created Methods ------------
-
-    // Make the transition between fragments
-    public void changeFragment(View view) {
-
-        Bundle args = new Bundle();
-
-        newFragment = null;
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        newFragment.setArguments(args);
-        transaction.replace(R.id.fragment_container_fl, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
 }
