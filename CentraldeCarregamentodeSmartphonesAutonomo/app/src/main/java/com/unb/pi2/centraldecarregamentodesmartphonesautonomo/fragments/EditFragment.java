@@ -56,7 +56,7 @@ public class EditFragment extends Fragment {
 
                 if (user != null && !newPassword.getText().toString().trim().equals("")) {
                     if (newPassword.getText().toString().trim().length() < 6) {
-                        newPassword.setError("Password too short, enter minimum 6 characters");
+                        newPassword.setError("Senha muito curta, entre com no mínimo 6 caracteres");
                     } else {
                         updateUser();
                     }
@@ -99,27 +99,27 @@ public class EditFragment extends Fragment {
             return;
         }
         else {
-            user.updatePassword(newPassword.getText().toString().trim())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(getActivity(), "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
-                                //signOut();
-                            } else {
-                                Toast.makeText(getActivity(), "Failed to update password!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
             user.updateEmail(newEmail.getText().toString().trim())
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(getActivity(), "Email address is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Email atualizado com sucesso!", Toast.LENGTH_LONG).show();
                                 //signOut();
                             } else {
-                                Toast.makeText(getActivity(), "Failed to update email!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), "Falha ao atualizar o email!", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+            user.updatePassword(newPassword.getText().toString().trim())
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getActivity(), "Senha atualizada com sucesso!", Toast.LENGTH_SHORT).show();
+                                //signOut();
+                            } else {
+                                Toast.makeText(getActivity(), "Falha ao atualizar a senha!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

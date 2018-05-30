@@ -18,6 +18,13 @@
         android:paddingRight="24dp"
         android:paddingTop="56dp">
 
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:src="@mipmap/cacelu" />
+
         <EditText
             android:id="@+id/login_email_et"
             android:layout_width="match_parent"
@@ -40,7 +47,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="Logar" />
+            android:textColor="@android:color/black"
+            android:background="#f2fe71"
+            android:text="Entrar" />
 
         <TextView
             android:id="@+id/user_register_tv"

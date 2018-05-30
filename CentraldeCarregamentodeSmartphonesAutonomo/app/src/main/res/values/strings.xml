@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Central de Carregamento de Smartphones Autonomo</string>
+    <string name="app_name">Central de Carregamento de Smartphones Autonoma</string>
     <string name="payment_button">Realizar Pagamento</string>
     <string name="start_charging_button">Carregar o celular</string>
 

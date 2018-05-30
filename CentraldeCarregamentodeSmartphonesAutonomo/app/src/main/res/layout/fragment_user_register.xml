@@ -12,6 +12,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:src="@mipmap/cacelu" />
+
         <EditText
             android:id="@+id/user_cpf_et"
             android:layout_width="match_parent"
@@ -40,6 +47,8 @@
             android:id="@+id/register_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:background="#f2fe71"
             android:text="Cadastrar" />
     </LinearLayout>
 
