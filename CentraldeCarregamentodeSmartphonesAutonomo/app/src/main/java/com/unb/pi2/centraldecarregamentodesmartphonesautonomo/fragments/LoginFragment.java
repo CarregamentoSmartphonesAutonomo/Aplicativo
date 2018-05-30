@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -51,6 +50,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
         btLogin.setOnClickListener(this);
         tvUserRegister.setOnClickListener(this);
+        tvSendEmail.setOnClickListener(this);
 
 
 
@@ -68,6 +68,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     .replace(R.id.fragment_container_fl, userRegisterFragment)
                     .addToBackStack(null)
                     .commit();
+        }
+        else if (view == tvSendEmail){
+            ResetPasswordActivity sendEmailUser = new ResetPasswordActivity();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container_fl, sendEmailUser)
+                    .addToBackStack(null)
+                    .commit();
+
         }
     }
 
