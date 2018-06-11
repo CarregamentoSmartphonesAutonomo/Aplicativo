@@ -33,7 +33,6 @@ public class ResetPasswordActivity extends Fragment {
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-
         inputEmail = (EditText) view.findViewById(R.id.email);
         btnReset = (Button) view.findViewById(R.id.btn_reset_password);
         btnBack = (Button) view.findViewById(R.id.btn_back);
