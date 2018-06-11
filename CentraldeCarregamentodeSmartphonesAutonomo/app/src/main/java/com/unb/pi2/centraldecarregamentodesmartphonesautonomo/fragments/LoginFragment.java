@@ -2,6 +2,7 @@ package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.MainActivity;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
+
+import java.util.Objects;
 
 public class LoginFragment extends Fragment implements View.OnClickListener{
 
@@ -64,17 +67,21 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         }
         else if (view == tvUserRegister){
             UserRegisterFragment userRegisterFragment= new UserRegisterFragment();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_fl, userRegisterFragment)
-                    .addToBackStack(null)
-                    .commit();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_fl, userRegisterFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
         }
         else if (view == tvSendEmail){
             ResetPasswordActivity sendEmailUser = new ResetPasswordActivity();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container_fl, sendEmailUser)
-                    .addToBackStack(null)
-                    .commit();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container_fl, sendEmailUser)
+                        .addToBackStack(null)
+                        .commit();
+            }
 
         }
     }

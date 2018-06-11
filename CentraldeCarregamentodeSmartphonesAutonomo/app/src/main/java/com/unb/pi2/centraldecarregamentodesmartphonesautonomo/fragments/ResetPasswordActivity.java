@@ -26,7 +26,7 @@ public class ResetPasswordActivity extends Fragment {
 
         // Inflate the layout for this fragment
         View view;
-        view = inflater.inflate(R.layout.activity_reset_password, container, false);
+        view = inflater.inflate(R.layout.fragment_reset_password, container, false);
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();

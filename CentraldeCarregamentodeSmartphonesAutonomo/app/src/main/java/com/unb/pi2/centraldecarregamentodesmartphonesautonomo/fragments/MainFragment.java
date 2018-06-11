@@ -60,7 +60,9 @@ public class    MainFragment extends Fragment implements Observer {
         charge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create new fragment and transaction
+
+                payment(v);
+                /*// Create new fragment and transaction
                 Fragment newFragment = new CharginProcessFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
@@ -70,7 +72,7 @@ public class    MainFragment extends Fragment implements Observer {
                 transaction.addToBackStack(null);
 
                 // Commit the transaction
-                transaction.commit();
+                transaction.commit();*/
             }
         });
         /*paymentButton.setOnClickListener(new View.OnClickListener() {
@@ -92,9 +94,7 @@ public class    MainFragment extends Fragment implements Observer {
         intent.putExtra(CreditCardUtils.EXTRA_CARD_NUMBER, "5185055284268687");
         intent.putExtra(CreditCardUtils.EXTRA_CARD_EXPIRY, "03/19");
         intent.putExtra(CreditCardUtils.EXTRA_CARD_SHOW_CARD_SIDE, CreditCardUtils.CARD_SIDE_BACK);
-        intent.putExtra(CreditCardUtils.EXTRA_CARD_CVV, "319" +
-                "" +
-                "");
+        intent.putExtra(CreditCardUtils.EXTRA_CARD_CVV, "319");
         intent.putExtra(CreditCardUtils.EXTRA_VALIDATE_EXPIRY_DATE, true);
         startActivityForResult(intent, CREATE_NEW_CARD);
 
@@ -225,7 +225,7 @@ public class    MainFragment extends Fragment implements Observer {
                 .build();
 
         PaymentConnection paymentConnection = retrofit.create(PaymentConnection.class);
-        Call<String> call = paymentConnection.sendPayment(10, creditCard.getToken());
+        Call<String> call = paymentConnection.sendPayment(100, creditCard.getToken());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
