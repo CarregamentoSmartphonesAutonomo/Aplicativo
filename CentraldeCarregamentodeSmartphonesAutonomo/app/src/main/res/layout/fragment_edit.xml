@@ -33,14 +33,15 @@
             android:id="@+id/sending_edit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#0000ff"
             android:text="Atualizar" />
 
         <Button
             android:id="@+id/remove_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Remover Usuário"
-            android:background="#E33A24"/>
+            android:background="#ff0000"
+            android:text="Remover Usuário" />
     </LinearLayout>
 
 
