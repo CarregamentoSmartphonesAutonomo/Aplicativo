@@ -1,5 +1,6 @@
 package com.unb.pi2.centraldecarregamentodesmartphonesautonomo;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -9,13 +10,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.EditFragment;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.LoginFragment;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private Fragment newFragment;
+
+    private Button signOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.it_logout:
-                changeFragment("logout");
+                logOut();
                 break;
         }
         return true;
@@ -83,5 +89,10 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragment_container_fl, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void logOut(){
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        finish();
     }
 }
