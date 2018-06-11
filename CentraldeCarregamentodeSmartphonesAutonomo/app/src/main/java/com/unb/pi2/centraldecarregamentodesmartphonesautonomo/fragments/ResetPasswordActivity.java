@@ -1,5 +1,6 @@
 package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.LoginActivity;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 
 public class ResetPasswordActivity extends Fragment {
@@ -31,7 +33,6 @@ public class ResetPasswordActivity extends Fragment {
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
 
-
         inputEmail = (EditText) view.findViewById(R.id.email);
         btnReset = (Button) view.findViewById(R.id.btn_reset_password);
         btnBack = (Button) view.findViewById(R.id.btn_back);
@@ -41,7 +42,8 @@ public class ResetPasswordActivity extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //finish();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -52,7 +54,7 @@ public class ResetPasswordActivity extends Fragment {
                 String email = inputEmail.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getActivity(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Digite e-mail cadastrado", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -61,9 +63,9 @@ public class ResetPasswordActivity extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Enviado email com instruções para resetar a senha!", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(getActivity(), "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Email não cadastrado!", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
