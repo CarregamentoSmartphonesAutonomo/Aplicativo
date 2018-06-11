@@ -58,6 +58,13 @@
             android:layout_marginLeft="20dp"
             android:text="Ainda não possui uma conta? Cadastre-se aqui!" />
 
+        <TextView
+            android:id="@+id/send_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Esqueceu sua senha? Clique aqui!" />
+
 
     </LinearLayout>
 
