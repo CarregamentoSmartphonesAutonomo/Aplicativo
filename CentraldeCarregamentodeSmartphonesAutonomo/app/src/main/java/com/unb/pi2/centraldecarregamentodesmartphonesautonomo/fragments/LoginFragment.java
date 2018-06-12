@@ -42,7 +42,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-
         etEmail = view.findViewById(R.id.login_email_et);
         etPassword = view.findViewById(R.id.login_password_et);
         btLogin = view.findViewById(R.id.login_bt);
@@ -54,8 +53,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         btLogin.setOnClickListener(this);
         tvUserRegister.setOnClickListener(this);
         tvSendEmail.setOnClickListener(this);
-
-
 
         return view;
     }
@@ -82,7 +79,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         .addToBackStack(null)
                         .commit();
             }
-
         }
     }
 

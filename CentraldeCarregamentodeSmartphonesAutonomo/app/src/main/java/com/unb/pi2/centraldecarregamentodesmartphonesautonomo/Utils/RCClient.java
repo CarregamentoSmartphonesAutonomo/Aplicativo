@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class RCClient {
-    public static final String SERVER_IP = "10.3.141.1";
+    private static final String SERVER_IP = "10.3.141.1";
 
     public Socket getSocket() {
         return socket;
@@ -24,7 +24,7 @@ public class RCClient {
             socket = new Socket(InetAddress.getByName(SERVER_IP), 4141);
             output = new PrintWriter(socket.getOutputStream(), true);
             input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            write(output, "SYN"); // Synchronize
+            //write(output, "SYN"); // Synchronize
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -32,12 +32,14 @@ public class RCClient {
         }
     }
 
-    public void sendChargeStep(int chargeProcessStep) {
-        write(output, "chargeProcessStep="+chargeProcessStep);
+    public void sendChargeStep(String chargeProcessStep) {
+        write(output, chargeProcessStep);
     }
-    void write(PrintWriter output, String message) {
+
+    private void write(PrintWriter output, String message) {
         System.out.println("Sending: " +message);
         output.println(message);
+        output.flush();
     }
 
     public void closeUp() {

@@ -61,8 +61,8 @@ public class    MainFragment extends Fragment implements Observer {
             @Override
             public void onClick(View v) {
 
-                payment(v);
-                /*// Create new fragment and transaction
+                //payment(v);
+                // Create new fragment and transaction
                 Fragment newFragment = new CharginProcessFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
@@ -72,7 +72,7 @@ public class    MainFragment extends Fragment implements Observer {
                 transaction.addToBackStack(null);
 
                 // Commit the transaction
-                transaction.commit();*/
+                transaction.commit();
             }
         });
         /*paymentButton.setOnClickListener(new View.OnClickListener() {
