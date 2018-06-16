@@ -48,19 +48,45 @@ public class CharginProcessFragment extends Fragment {
                 //receive the message which the server sends back
                 BufferedReader in = new BufferedReader(new InputStreamReader(rcClient.getSocket().getInputStream()));
 
+                boolean isRunning = true;
+
                 //in this while the client listens for the messages sent by the server
-                while (true) {
+                while (isRunning) {
                     String serverCommand = in.readLine();
+                    Log.d(TAG, "Server command -> " + serverCommand);
                     String serverData = in.readLine();
-                    Log.d(TAG, "Server data -> " + serverData);
 
-                    if(serverData.equals("123")){
-                        Log.d(TAG, "Sending second command -> ");
-                        rcClient.sendChargeStep("2");
+                    switch (serverCommand){
+                        case "1":
+                            Log.d(TAG, "Server data -> " + serverData);
+                            Log.d(TAG, "Sending second command -> 2");
+                            rcClient.sendChargeStep("2");
+                            continue;
+                        case "2":
+                            Log.d(TAG, "Server data -> " + serverData);
+                            Log.d(TAG, "Sending third command -> 3");
+                            rcClient.sendChargeStep("3");
+                            continue;
+                        case "3":
+                            Log.d(TAG, "Server data -> " + serverData);
+                            Log.d(TAG, "Sending forth command -> 4");
+                            rcClient.sendChargeStep("4");
+                            continue;
+                        case "4":
+                            Log.d(TAG, "Server data -> " + serverData);
+                            Log.d(TAG, "Sending fith command -> 5");
+                            //rcClient.sendChargeStep("5\n");
+                            continue;
+                        case "5":
+                            Log.d(TAG, "Server data -> " + serverData);
+                            Log.d(TAG, "Finishing connection");
+                            //rcClient.sendChargeStep("ahauhau");
+                            break;
+                        default:
+                            Log.d(TAG, "Command not found.");
+                            isRunning = false;
+                            break;
                     }
-                    //break;
-                    //serverMessage = null;
-
                 }
             }
             catch (Exception e) {
