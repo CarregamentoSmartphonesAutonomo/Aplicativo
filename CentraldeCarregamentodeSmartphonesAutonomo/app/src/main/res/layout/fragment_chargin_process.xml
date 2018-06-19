@@ -8,47 +8,46 @@
     tools:context=".fragments.CharginProcessFragment">
 
     <TextView
+        android:id="@+id/instructions_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:text="Instruções"
+        android:gravity="center"
         android:textSize="40sp"
         android:textStyle="bold" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="40sp"
-        android:text="@string/instructions1"/>
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/googleg_standard_color_18"/>
+        <Button
+            android:id="@+id/cabin1_bt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:text="@string/instructions2"/>
+        <Button
+            android:id="@+id/cabin2_bt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/googleg_standard_color_18"/>
+        <Button
+            android:id="@+id/cabin3_bt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:text="@string/instructions3"/>
+    </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/googleg_standard_color_18"/>
+    <Button
+        android:layout_width="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:text="Cancelar"
+        android:textSize="30dp"
+        android:layout_weight="3"/>
+
 
 </LinearLayout>
