@@ -69,15 +69,14 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
     // ------------ Created Methods ------------
     private void registerUser(){
         String email = etEmail.getText().toString().trim();
-        String CPF = etCpf.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(CPF)){
+        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)){
             Toast.makeText(getActivity(),"É necessário preencher todos os campos",Toast.LENGTH_SHORT).show();
             return;
         }
         else {
-            User user = new User("Fulanão",email,Integer.parseInt(CPF),Integer.parseInt(password));
+            User user = new User("Fulanão",email,Integer.parseInt(password));
             firebaseAuth.createUserWithEmailAndPassword(email,password)
                         .addOnCompleteListener( getActivity(), new OnCompleteListener<AuthResult>() {
                 @Override

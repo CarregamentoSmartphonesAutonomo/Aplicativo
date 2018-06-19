@@ -7,7 +7,7 @@ public class User {
     private int cpf;
     private int password;
 
-    public User(String name, String email, int cpf, int password){
+    public User(String name, String email, int password){
         setName(name);
         setEmail(email);
         setCpf(cpf);
