@@ -29,42 +29,51 @@
             android:id="@+id/login_email_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:ems="10"
-            android:hint="Email"/>
+            android:layout_marginBottom="10dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
         <EditText
             android:id="@+id/login_password_et"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:ems="10"
+            android:layout_marginBottom="10dp"
             android:hint="Senha"
-            android:inputType="numberPassword" />
+            android:inputType="textPassword"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
         <Button
             android:id="@+id/login_bt"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:textColor="@android:color/black"
-            android:background="#f2fe71"
-            android:text="Entrar" />
+            android:layout_marginTop="20dip"
+            android:background="@color/colorAccent"
+            android:text="Entrar"
+            android:textColor="@android:color/black" />
 
-        <TextView
+        <Button
             android:id="@+id/user_register_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Ainda não possui uma conta? Cadastre-se aqui!" />
+            android:layout_marginTop="20dip"
+            android:background="@null"
+            android:text="Não possui uma conta? Cadastre-se aqui!"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
 
-        <TextView
+        <Button
             android:id="@+id/send_email"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="Esqueceu sua senha? Clique aqui!" />
-
+            android:layout_marginTop="20dip"
+            android:background="@null"
+            android:text="Esqueceu sua senha? Clique aqui!"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

@@ -24,8 +24,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Nome"
-            android:inputType="textEmailAddress" />
+            android:hint="Nome completo"
+            android:inputType="textEmailAddress"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
         <EditText
             android:id="@+id/user_cpf_et"
@@ -33,7 +35,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="CPF"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
         <EditText
             android:id="@+id/user_email_et"
@@ -41,7 +45,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
         <EditText
             android:id="@+id/user_password_et"
@@ -49,7 +55,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Senha"
-            android:inputType="numberPassword" />
+            android:inputType="numberPassword"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
 
         <Button
             android:id="@+id/register_bt"
@@ -66,7 +74,7 @@
             android:layout_marginTop="10dp"
             android:background="@null"
             android:text="@string/btn_back"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

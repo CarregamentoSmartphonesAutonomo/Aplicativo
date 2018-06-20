@@ -28,8 +28,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private EditText etEmail;
     private EditText etPassword;
     private Button btLogin;
-    private TextView tvUserRegister;
-    private TextView tvSendEmail;
+    private Button tvUserRegister;
+    private Button tvSendEmail;
 
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
