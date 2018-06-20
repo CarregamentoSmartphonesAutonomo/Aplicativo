@@ -13,6 +13,12 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <TextView
+            android:id="@+id/text_view_id"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="CPF: " />
+
         <EditText
             android:id="@+id/new_email"
             android:layout_width="match_parent"

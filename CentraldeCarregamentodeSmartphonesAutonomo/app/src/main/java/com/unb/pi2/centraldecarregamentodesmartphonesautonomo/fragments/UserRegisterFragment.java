@@ -1,6 +1,7 @@
 package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.LoginActivity;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.User;
 
@@ -26,9 +29,11 @@ import static android.content.ContentValues.TAG;
 public class UserRegisterFragment extends Fragment implements View.OnClickListener{
 
     private Button btRegister;
+    private Button btnBack;
     private EditText etEmail;
     private EditText etCpf;
     private EditText etPassword;
+    private EditText etName;
 
     private FirebaseAuth firebaseAuth;
     public UserRegisterFragment() {
@@ -48,6 +53,16 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
         etEmail = view.findViewById(R.id.user_email_et);
         etCpf = view.findViewById(R.id.user_cpf_et);
         etPassword = view.findViewById(R.id.user_password_et);
+        etName = view.findViewById(R.id.user_name_et);
+        btnBack = (Button) view.findViewById(R.id.btn_back);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btRegister.setOnClickListener(this);
 
@@ -71,13 +86,16 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
         String email = etEmail.getText().toString().trim();
         String CPF = etCpf.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
+        String name = etName.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(CPF)){
+        if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(CPF) || TextUtils.isEmpty(name)){
             Toast.makeText(getActivity(),"É necessário preencher todos os campos",Toast.LENGTH_SHORT).show();
             return;
         }
         else {
-            User user = new User("Fulanão",email,Integer.parseInt(CPF),Integer.parseInt(password));
+            User user = new User(name,email,CPF,Integer.parseInt(password));
+            //Log.d(TAG, "Queremos saber a verdade: " + name );
+
             firebaseAuth.createUserWithEmailAndPassword(email,password)
                         .addOnCompleteListener( getActivity(), new OnCompleteListener<AuthResult>() {
                 @Override

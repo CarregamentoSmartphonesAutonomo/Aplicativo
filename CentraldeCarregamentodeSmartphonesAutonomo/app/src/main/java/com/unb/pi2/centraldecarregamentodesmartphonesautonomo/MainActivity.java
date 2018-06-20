@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.EditFragment;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.LoginFragment;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.MainFragment;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -95,4 +97,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
         finish();
     }
+
 }

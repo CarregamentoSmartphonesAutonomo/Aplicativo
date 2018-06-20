@@ -4,10 +4,10 @@ public class User {
 
     private String name;
     private String email;
-    private int cpf;
+    private String cpf;
     private int password;
 
-    public User(String name, String email, int cpf, int password){
+    public User(String name, String email, String cpf, int password){
         setName(name);
         setEmail(email);
         setCpf(cpf);
@@ -30,11 +30,11 @@ public class User {
         this.email = email;
     }
 
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    private void setCpf(int cpf) {
+    private void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
