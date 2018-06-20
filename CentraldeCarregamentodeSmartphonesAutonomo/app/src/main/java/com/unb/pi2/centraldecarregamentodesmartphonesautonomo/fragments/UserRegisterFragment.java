@@ -12,16 +12,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.LoginActivity;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.MainActivity;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.User;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.UserDAO;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -35,6 +46,8 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
     private EditText etPassword;
     private EditText etName;
 
+    private FirebaseFirestore db;
+
     private FirebaseAuth firebaseAuth;
     public UserRegisterFragment() {
         // Required empty public constructor
@@ -45,7 +58,10 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+
+
         View view = inflater.inflate(R.layout.fragment_user_register, container, false);
+        db = FirebaseFirestore.getInstance();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -83,17 +99,17 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
 
     // ------------ Created Methods ------------
     private void registerUser(){
-        String email = etEmail.getText().toString().trim();
-        String CPF = etCpf.getText().toString().trim();
+        final String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        String name = etName.getText().toString().trim();
+        final String name = etName.getText().toString().trim();
+        final String CPF = etCpf.getText().toString().trim();
 
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(CPF) || TextUtils.isEmpty(name)){
             Toast.makeText(getActivity(),"É necessário preencher todos os campos",Toast.LENGTH_SHORT).show();
             return;
         }
         else {
-            User user = new User(name,email,CPF,Integer.parseInt(password));
+            final User user = new User(name,email,CPF,Integer.parseInt(password));
             //Log.d(TAG, "Queremos saber a verdade: " + name );
 
             firebaseAuth.createUserWithEmailAndPassword(email,password)
@@ -103,7 +119,31 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
-                        Toast.makeText(getActivity(),"Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
+
+                        //Add name and cpf
+                        Map<String, Object> newContact = new HashMap<>();
+                        newContact.put("name", name);
+                        newContact.put("cpf", CPF);
+                        newContact.put("email", email);
+
+                        db.collection("User").document(CPF)
+                                .set(newContact)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        UserDAO userDao = UserDAO.getInstance();
+                                        userDao.setUser(user);
+                                        Toast.makeText(getActivity(),"Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d("ERROR",  e.getMessage());
+                                    }
+                                });
+
+
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());

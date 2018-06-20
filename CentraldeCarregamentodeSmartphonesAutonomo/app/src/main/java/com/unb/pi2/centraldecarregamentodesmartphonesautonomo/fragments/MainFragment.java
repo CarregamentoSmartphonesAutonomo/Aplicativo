@@ -4,6 +4,7 @@ package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -14,15 +15,24 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cooltechworks.creditcarddesign.CardEditActivity;
 import com.cooltechworks.creditcarddesign.CreditCardUtils;
 import com.cooltechworks.creditcarddesign.CreditCardView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.Utils.PaymentConnection;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.CreditCard;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.User;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.UserDAO;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -43,6 +53,10 @@ public class    MainFragment extends Fragment implements Observer {
 
     private LinearLayout cardContainer;
     private View view;
+    private TextView txtDisplay;
+    private UserDAO user;
+
+    private FirebaseFirestore db;
 
     public MainFragment() {
         // Required empty public constructor
@@ -54,6 +68,8 @@ public class    MainFragment extends Fragment implements Observer {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        db = FirebaseFirestore.getInstance();
 
         Button paymentButton = view.findViewById(R.id.payment_bt);
         Button charge = view.findViewById(R.id.rasp_connection_bt);
@@ -81,11 +97,40 @@ public class    MainFragment extends Fragment implements Observer {
                 payment(v);
             }
         });*/
+        txtDisplay = view.findViewById(R.id.txtDisplay);
+
+        readSingleContactCustomObject();
 
         return view;
     }
 
     // ------------ Created Methods ------------
+    private void readSingleContactCustomObject(){
+        user = UserDAO.getInstance();
+
+        StringBuilder data = new StringBuilder("");
+        data.append("Name: ").append(user.getUser().getName());
+        data.append("\nCPF: ").append(user.getUser().getCpf());
+        data.append("\nEmail: ").append(user.getUser().getEmail());
+        txtDisplay.setText(data.toString());
+    }
+
+    /*private void readSingleContact(){
+        DocumentReference contact = db.collection("User").document(CPF);
+        contact.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    StringBuilder data = new StringBuilder("");
+                    data.append("Name: ").append(doc.getString("name"));
+                    data.append("\nCPF: ").append(doc.getString("cpf"));
+                    txtDisplay.setText(data.toString());
+                }
+            }
+        });
+    }
+*/
     public void payment(View v){
         Log.d("payment", "Entrou no método");
 
