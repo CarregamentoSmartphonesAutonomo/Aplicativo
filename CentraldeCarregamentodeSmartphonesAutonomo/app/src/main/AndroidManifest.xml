@@ -11,12 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name="com.cooltechworks.creditcarddesign.CardEditActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             />
 
         <activity android:name=".LoginActivity"
-                  android:theme="@style/Theme.AppCompat.NoActionBar">
+                  android:theme="@style/Theme.AppCompat.NoActionBar"
+                  android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +27,8 @@
         </activity>
         <activity android:name=".MainActivity"
                   android:theme="@style/Theme.AppCompat.NoActionBar"
-                  android:label="CACELU">
+                  android:label="CACELU"
+                  android:screenOrientation="landscape">
 
         </activity>
     </application>
