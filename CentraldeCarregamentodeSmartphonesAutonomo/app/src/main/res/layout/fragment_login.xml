@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:hint="Senha"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
 
