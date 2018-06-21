@@ -23,6 +23,9 @@ import android.widget.Toast;
 import com.cooltechworks.creditcarddesign.CardEditActivity;
 import com.cooltechworks.creditcarddesign.CreditCardUtils;
 import com.cooltechworks.creditcarddesign.CreditCardView;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.Utils.PaymentConnection;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.Utils.RCClient;
@@ -30,12 +33,8 @@ import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.CreditCard;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.UserDAO;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -67,6 +66,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
     private ImageView facialRecognitionInstruction1;
     private ImageView facialRecognitionInstruction2;
     private ImageView facialRecognitionInstruction3;
+    private TextView instructionsText;
     private TextView timer;
 
     private String firstCommand;
@@ -164,7 +164,6 @@ public class CharginProcessFragment extends Fragment implements Observer {
                                 public void onClick(View v) {
                                     // Confirm the cabin confirmation
                                     showTimer();
-                                    firstCommand = "4";
                                 }
                             });
                             continue;
@@ -249,10 +248,20 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
     private void showTimer(){
         closeCabinButton.setVisibility(View.GONE);
+        timer.setVisibility(View.VISIBLE);
         backCancelButton.setText("Terminar Carregamento");
+        instructionsText.setText("Seu celular está carregando.\n" +
+                "Tempo de carregamento:");
 
         // Start timer
-        startTime = System.currentTimeMillis();
+        if(userDAO.getUser().getChargeTime() == 0){
+            startTime = System.currentTimeMillis();
+            userDAO.getUser().setChargeTime(startTime);
+            updateApi();
+        }
+        else {
+            startTime = userDAO.getUser().getChargeTime();
+        }
         timerHandler.postDelayed(timerRunnable, 0);
     }
 
@@ -337,6 +346,18 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
     private void showMessage(final String message){
         Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    }
+
+    private void updateApi(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference user = db.collection("User").document(userDAO.getUser().getCpf());
+        user.update("chargeTime", userDAO.getUser().getChargeTime())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG,"User update chargeTime -> Success!");
+                    }
+                });
     }
 
     @Override
@@ -434,24 +455,23 @@ public class CharginProcessFragment extends Fragment implements Observer {
         facialRecognitionInstruction2 = view.findViewById(R.id.facial_rec_instr2_iv);
         facialRecognitionInstruction3 = view.findViewById(R.id.facial_rec_instr3_iv);
         closeCabinButton = view.findViewById(R.id.close_cabin_bt);
+        instructionsText = view.findViewById(R.id.instructions_tv);
         timer = view.findViewById(R.id.timer_tv);
+
+        if(userDAO.getUser().getChargeTime() == 0){
+            firstCommand = "1";
+        }
+        else {
+            firstCommand = "3";
+        }
+        showTimer();
 
         // Setting clickable to false
         cabin1Button.setClickable(false);
         cabin2Button.setClickable(false);
         cabin3Button.setClickable(false);
 
-        if(userDAO.getUser().getChargeTime() == 0){
-            startTime = System.currentTimeMillis();
-            userDAO.getUser().setChargeTime(startTime);
-        }
-        else {
-            startTime = userDAO.getUser().getChargeTime();
-        }
-        timer.setVisibility(View.VISIBLE);
-        // Start timer
-
-        timerHandler.postDelayed(timerRunnable, 0);
+        //timerHandler.postDelayed(timerRunnable, 0);
 
         backCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -479,7 +499,9 @@ public class CharginProcessFragment extends Fragment implements Observer {
                 else {
                     // Stop timer
                     timerHandler.removeCallbacks(timerRunnable);
+                    userDAO.getUser().setChargeTime(0);
 
+                    updateApi();
                     // Send command to rasp to stop charging and open de cabin
                     rcClient.sendChargeStep("4|null");
                 }
