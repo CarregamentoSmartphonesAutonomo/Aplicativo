@@ -27,6 +27,7 @@ import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.R;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.Utils.PaymentConnection;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.Utils.RCClient;
 import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.CreditCard;
+import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.UserDAO;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -55,6 +56,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
     private LinearLayout cardContainer;
 
     private View view;
+    private UserDAO userDAO;
 
     private RCClient rcClient;
     private Button backCancelButton;
@@ -421,7 +423,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_chargin_process, container, false);
 
-        //userDAO = UserDAO.getUser().getCpf();
+        userDAO = UserDAO.getInstance();
 
         // Instanciating view elements
         backCancelButton = view.findViewById(R.id.back_cancel_bt);
@@ -439,9 +441,16 @@ public class CharginProcessFragment extends Fragment implements Observer {
         cabin2Button.setClickable(false);
         cabin3Button.setClickable(false);
 
+        if(userDAO.getUser().getChargeTime() == 0){
+            startTime = System.currentTimeMillis();
+            userDAO.getUser().setChargeTime(startTime);
+        }
+        else {
+            startTime = userDAO.getUser().getChargeTime();
+        }
         timer.setVisibility(View.VISIBLE);
         // Start timer
-        startTime = System.currentTimeMillis();
+
         timerHandler.postDelayed(timerRunnable, 0);
 
         backCancelButton.setOnClickListener(new View.OnClickListener() {

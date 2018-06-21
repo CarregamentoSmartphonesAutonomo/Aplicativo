@@ -6,6 +6,8 @@ public class User {
     private String email;
     private String cpf;
     private int password;
+    private String cabin;
+    private long chargeTime;
 
     public User(String name, String email, String cpf, int password){
         setName(name);
@@ -44,6 +46,22 @@ public class User {
 
     private void setPassword(int password) {
         this.password = password;
+    }
+
+    public String getCabin() {
+        return cabin;
+    }
+
+    public void setCabin(String cabin) {
+        this.cabin = cabin;
+    }
+
+    public long getChargeTime() {
+        return chargeTime;
+    }
+
+    public void setChargeTime(long chargeTime) {
+        this.chargeTime = chargeTime;
     }
 
 }
