@@ -35,6 +35,9 @@ import com.unb.pi2.centraldecarregamentodesmartphonesautonomo.model.UserDAO;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -62,6 +65,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
     private Button cabin1Button;
     private Button cabin2Button;
     private Button cabin3Button;
+    private Button confirmationButton;
     private Button closeCabinButton;
     private ImageView facialRecognitionInstruction1;
     private ImageView facialRecognitionInstruction2;
@@ -71,6 +75,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
     private String firstCommand;
     private String cabinChosen;
+
 
     Thread thread = new Thread(new Runnable() {
         @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -89,7 +94,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
             try {
                 //receive the message which the server sends back
-                BufferedReader in = new BufferedReader(new InputStreamReader(rcClient.getSocket().getInputStream()));
+                 BufferedReader in = new BufferedReader(new InputStreamReader(rcClient.getSocket().getInputStream()));
 
                 boolean isRunning = true;
 
@@ -105,40 +110,16 @@ public class CharginProcessFragment extends Fragment implements Observer {
                             Log.d(TAG, "Server data -> " + serverData);
                             Log.d(TAG, "Sending second command -> 2");
 
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    instructionsText.setText("Selecione a cabine:");
+                                }
+                            });
                             // Slitting serverData to get the freeCabins
                             String freeCabins[] = serverData.split(",");
                             setFreeCabins(freeCabins);
 
-                            // Verify if the buttons were clicked
-                            cabin1Button.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // Sending data to obtain photos from facial recognition
-                                    cabinChosen = "1";
-                                    rcClient.sendChargeStep("2|01"/*+userDAO.getUser().getcpf()*/);
-                                    showFacialRecognitionIntructions();
-                                }
-                            });
-
-                            cabin2Button.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // Sending data to obtain photos from facial recognition
-                                    cabinChosen = "2";
-                                    rcClient.sendChargeStep("2|01");
-                                    showFacialRecognitionIntructions();
-                                }
-                            });
-
-                            cabin3Button.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // Sending data to obtain photos from facial recognition
-                                    cabinChosen = "3";
-                                    rcClient.sendChargeStep("2|01");
-                                    showFacialRecognitionIntructions();
-                                }
-                            });
                             continue;
 
                         // Receiving if the facial recognition was successful (True or False)
@@ -146,12 +127,17 @@ public class CharginProcessFragment extends Fragment implements Observer {
                             Log.d(TAG, "Server data -> " + serverData);
                             Log.d(TAG, "Sending third command -> 3");
 
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    instructionsText.setText("Instruções:");
+                                }
+                            });
+
                             if(serverData.equals("True")){
-                                showConfirmButton();
+                                rcClient.sendChargeStep("3|Dario,01," + cabinChosen);
                             }
 
-                            // Seding data to opening the cab (name, cpf, cabin number)
-                            rcClient.sendChargeStep("3|Dario,01," + cabinChosen);
                             continue;
 
                         // Receiving the cellphone insertion in the cabin was successful
@@ -159,26 +145,35 @@ public class CharginProcessFragment extends Fragment implements Observer {
                             Log.d(TAG, "Server data -> " + serverData);
                             Log.d(TAG, "Sending forth command -> 4");
 
-                            closeCabinButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // Confirm the cabin confirmation
-                                    showTimer();
-                                }
-                            });
+                            if(serverData.equals("True")){
+                                showConfirmButton();
+                            }
+
                             continue;
 
                         // Receiving if the confirmation was successful (true or false)
                         case "4":
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    instructionsText.setText("Aguarde o reconhecimento facial...");
+                                }
+                            });
+
                             Log.d(TAG, "Server data -> " + serverData);
                             Log.d(TAG, "Sending fith command -> 5");
 
-                            // Removing smartphone (sending cabin number)
-                            rcClient.sendChargeStep("5|"+cabinChosen);
                             continue;
 
                         // Receiving if the removal was successful (true or false)
                         case "5":
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    instructionsText.setText("Rosto reconhecido");
+                                }
+                            });
+
                             Log.d(TAG, "Server data -> " + serverData);
                             Log.d(TAG, "Finishing connection");
 
@@ -206,26 +201,31 @@ public class CharginProcessFragment extends Fragment implements Observer {
             }*/
         }
     });
-    
-    private void setFreeCabins(String freeCabins[]){
-        // Setting visibility for buttons
-        cabin1Button.setVisibility(View.VISIBLE);
-        cabin2Button.setVisibility(View.VISIBLE);
-        cabin3Button.setVisibility(View.VISIBLE);
 
-        for (String freeCabin : freeCabins) {
-            switch (freeCabin) {
-                case "1":
-                    cabin1Button.setClickable(true);
-                    break;
-                case "2":
-                    cabin2Button.setClickable(true);
-                    break;
-                case "3":
-                    cabin3Button.setClickable(true);
-                    break;
+    private void setFreeCabins(final String freeCabins[]){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Setting visibility for buttons
+                cabin1Button.setVisibility(View.VISIBLE);
+                cabin2Button.setVisibility(View.VISIBLE);
+                cabin3Button.setVisibility(View.VISIBLE);
+
+                for (String freeCabin : freeCabins) {
+                    switch (freeCabin) {
+                        case "1":
+                            cabin1Button.setClickable(true);
+                            break;
+                        case "2":
+                            cabin2Button.setClickable(true);
+                            break;
+                        case "3":
+                            cabin3Button.setClickable(true);
+                            break;
+                    }
+                }
             }
-        }
+        });
     }
 
     private void showFacialRecognitionIntructions(){
@@ -239,11 +239,19 @@ public class CharginProcessFragment extends Fragment implements Observer {
     }
 
     private void showConfirmButton(){
-        facialRecognitionInstruction1.setVisibility(View.GONE);
-        facialRecognitionInstruction2.setVisibility(View.GONE);
-        facialRecognitionInstruction3.setVisibility(View.GONE);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                instructionsText.setText("Rosto confirmado!\n" +
+                        "Após colocar o celular na cabine, pressione o botão para fechar.");
 
-        closeCabinButton.setVisibility(View.VISIBLE);
+                facialRecognitionInstruction1.setVisibility(View.GONE);
+                facialRecognitionInstruction2.setVisibility(View.GONE);
+                facialRecognitionInstruction3.setVisibility(View.GONE);
+
+                closeCabinButton.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void showTimer(){
@@ -279,6 +287,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
     }
 
+    private int value;
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_OK) {
@@ -358,6 +367,17 @@ public class CharginProcessFragment extends Fragment implements Observer {
                         Log.d(TAG,"User update chargeTime -> Success!");
                     }
                 });
+        Map<String,Object> newCharge = new HashMap<>();
+        newCharge.put("charge", totalTime);
+
+        user.collection("ChargeHistory").document(String.valueOf(startTime))
+                .set(newCharge)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG,"User update chargeHistory -> Success!");
+                    }
+                });
     }
 
     @Override
@@ -376,7 +396,12 @@ public class CharginProcessFragment extends Fragment implements Observer {
                 .build();
 
         PaymentConnection paymentConnection = retrofit.create(PaymentConnection.class);
-        Call<String> call = paymentConnection.sendPayment(100, creditCard.getToken());
+
+        // The minimum payment is 100 Real cents
+        if(value < 100){
+            value = 100;
+        }
+        Call<String> call = paymentConnection.sendPayment(value, creditCard.getToken());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -415,16 +440,21 @@ public class CharginProcessFragment extends Fragment implements Observer {
     //runs without a timer by reposting this handler at the end of the runnable
     private Handler timerHandler = new Handler();
     private long startTime;
+    private int totalTime;
     private Runnable timerRunnable = new Runnable() {
 
         @Override
         public void run() {
             long millis = System.currentTimeMillis() - startTime;
             int seconds = (int) (millis / 1000);
+            value = (int) (seconds * 0.09);
             int minutes = seconds / 60;
+            int hours = minutes / 60;
             seconds = seconds % 60;
 
-            timer.setText(String.format("%d:%02d", minutes, seconds));
+            totalTime = minutes;
+
+            timer.setText(String.format("%d:%02d:%02d", hours, minutes, seconds));
 
             timerHandler.postDelayed(this, 500);
         }
@@ -462,9 +492,9 @@ public class CharginProcessFragment extends Fragment implements Observer {
             firstCommand = "1";
         }
         else {
-            firstCommand = "3";
+            firstCommand = "null";
+            showTimer();
         }
-        showTimer();
 
         // Setting clickable to false
         cabin1Button.setClickable(false);
@@ -484,6 +514,9 @@ public class CharginProcessFragment extends Fragment implements Observer {
                 facialRecognitionInstruction3.setVisibility(View.GONE);
                 closeCabinButton.setVisibility(View.GONE);
 
+                userDAO.getUser().setChargeTime(0);
+                updateApi();
+
                 if(backCancelButton.getText().equals("Cancelar")){
                     firstCommand = "1";
 
@@ -499,12 +532,54 @@ public class CharginProcessFragment extends Fragment implements Observer {
                 else {
                     // Stop timer
                     timerHandler.removeCallbacks(timerRunnable);
-                    userDAO.getUser().setChargeTime(0);
-
-                    updateApi();
                     // Send command to rasp to stop charging and open de cabin
-                    rcClient.sendChargeStep("4|null");
+                    rcClient.sendChargeStep("5|"+cabinChosen);
                 }
+            }
+        });
+
+        // Verify if the buttons were clicked
+        cabin1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Sending data to obtain photos from facial recognition
+                cabinChosen = "1";
+                rcClient.sendChargeStep("2|01"/*+userDAO.getUser().getcpf()*/);
+                instructionsText.setText("Fazendo reconhecimento facial, aguarde...");
+                showFacialRecognitionIntructions();
+            }
+        });
+
+        cabin2Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Sending data to obtain photos from facial recognition
+                cabinChosen = "2";
+                rcClient.sendChargeStep("2|01");
+                instructionsText.setText("Fazendo reconhecimento facial, aguarde...");
+                showFacialRecognitionIntructions();
+            }
+        });
+
+        cabin3Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Sending data to obtain photos from facial recognition
+                cabinChosen = "3";
+                rcClient.sendChargeStep("2|01");
+                instructionsText.setText("Fazendo reconhecimento facial, aguarde...");
+                showFacialRecognitionIntructions();
+            }
+        });
+
+
+
+        closeCabinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Confirm the cabin confirmation
+                rcClient.sendChargeStep("4|null");
+                showTimer();
             }
         });
 
