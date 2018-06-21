@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.EditFragment">
+    tools:context=".fragments.EditFragment"
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:id="@+id/user_register_ll"
@@ -13,19 +14,14 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/text_view_id"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="CPF: " />
-
         <EditText
             android:id="@+id/new_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Novo email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:textColorHint="@color/white"/>
 
         <EditText
             android:id="@+id/new_Password"
@@ -33,21 +29,24 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Nova senha"
-            android:inputType="numberPassword" />
+            android:inputType="numberPassword"
+            android:textColorHint="@color/white"/>
 
         <Button
             android:id="@+id/sending_edit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0000ff"
-            android:text="Atualizar" />
+            android:background="#4169E1"
+            android:text="Atualizar"
+            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/remove_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ff0000"
-            android:text="Remover Usuário" />
+            android:background="#000000"
+            android:text="Remover Usuário"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
 

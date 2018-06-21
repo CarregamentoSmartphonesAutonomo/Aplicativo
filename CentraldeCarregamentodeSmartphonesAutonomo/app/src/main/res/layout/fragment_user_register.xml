@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.UserRegisterFragment">
+    tools:context="com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.UserRegisterFragment"
+    android:background="@color/colorBackground"
+    >
 
     <LinearLayout
         android:id="@+id/user_register_ll"
@@ -63,9 +65,9 @@
             android:id="@+id/register_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:background="#f2fe71"
-            android:text="Cadastrar" />
+            android:background="#4169E1"
+            android:text="Cadastrar"
+            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/btn_back"

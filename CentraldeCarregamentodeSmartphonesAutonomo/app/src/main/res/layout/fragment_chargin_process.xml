@@ -5,13 +5,15 @@
     android:layout_height="match_parent"
     android:padding="20dp"
     android:orientation="vertical"
-    tools:context=".fragments.CharginProcessFragment">
+    tools:context=".fragments.CharginProcessFragment"
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/instructions_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Instruções"
+        android:textColor="@color/white"
         android:gravity="center"
         android:textSize="40sp"
         android:textStyle="bold" />
