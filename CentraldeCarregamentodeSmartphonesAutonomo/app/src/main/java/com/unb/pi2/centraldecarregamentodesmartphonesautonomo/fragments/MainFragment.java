@@ -158,8 +158,8 @@ public class    MainFragment extends Fragment implements Observer {
                         public void operate(View contentView) {
                             cardContainer = contentView.findViewById(R.id.card_container);
                             cardContainer.addView(creditCardView);
-                            int index = cardContainer.getChildCount() - 1;
-                            addCardListener(index, creditCardView);
+                            /*int index = cardContainer.getChildCount() - 1;
+                            addCardListener(index, creditCardView);*/
                         }
                     })
                     .setNegativeButton("Cancelar", new View.OnClickListener(){

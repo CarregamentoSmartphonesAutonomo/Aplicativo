@@ -25,23 +25,62 @@
             android:id="@+id/cabin1_bt"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
-
+            android:layout_weight="1"
+            android:visibility="gone"/>
         <Button
             android:id="@+id/cabin2_bt"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
-
+            android:layout_weight="1"
+            android:visibility="gone"/>
         <Button
             android:id="@+id/cabin3_bt"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/facial_rec_instr1_iv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/facial_rec_instr2_iv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/facial_rec_instr3_iv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/close_cabin_bt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="COMEÇAR O CARREGAMENTO"
+            android:gravity="center"
+            android:textSize="60dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/timer_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="00:00"
+            android:textSize="90sp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/back_cancel_bt"
         android:layout_width="300dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="match_parent"
