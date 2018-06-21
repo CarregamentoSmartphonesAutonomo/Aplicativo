@@ -38,8 +38,11 @@ public class RCClient {
 
     private void write(PrintWriter output, String message) {
         System.out.println("Sending: " +message);
-        output.println(message);
-        output.flush();
+        if(message != null && output != null)
+        {
+            output.println(message);
+            output.flush();
+        }
     }
 
     public void closeUp() {

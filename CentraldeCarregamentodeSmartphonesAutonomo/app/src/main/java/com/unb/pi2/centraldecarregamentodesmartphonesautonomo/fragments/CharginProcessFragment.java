@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -182,15 +183,6 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
                             payment();
 
-                            Fragment newFragment = new MainFragment();
-                            FragmentTransaction transaction = Objects.requireNonNull(getFragmentManager()).beginTransaction();
-
-                            transaction.replace(R.id.fragment_container_fl, newFragment);
-                            transaction.addToBackStack(null);
-
-                            // Commit the transaction
-                            transaction.commit();
-
                             // Finishing connection.
                             //rcClient.sendChargeStep("f|null");
                             //rcClient.closeUp();
@@ -257,7 +249,9 @@ public class CharginProcessFragment extends Fragment implements Observer {
         closeCabinButton.setVisibility(View.GONE);
         backCancelButton.setText("Terminar Carregamento");
 
-
+        // Start timer
+        startTime = System.currentTimeMillis();
+        timerHandler.postDelayed(timerRunnable, 0);
     }
 
     private void payment(){
@@ -395,6 +389,32 @@ public class CharginProcessFragment extends Fragment implements Observer {
         Log.d("getPaymentToken", "leaving method.");
     }
 
+    //runs without a timer by reposting this handler at the end of the runnable
+    private Handler timerHandler = new Handler();
+    private long startTime;
+    private Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            timer.setText(String.format("%d:%02d", minutes, seconds));
+
+            timerHandler.postDelayed(this, 500);
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        /*timerHandler.removeCallbacks(timerRunnable);
+        Button b = (Button)findViewById(R.id.button);
+        b.setText("start");*/
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -419,6 +439,11 @@ public class CharginProcessFragment extends Fragment implements Observer {
         cabin2Button.setClickable(false);
         cabin3Button.setClickable(false);
 
+        timer.setVisibility(View.VISIBLE);
+        // Start timer
+        startTime = System.currentTimeMillis();
+        timerHandler.postDelayed(timerRunnable, 0);
+
         backCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -432,8 +457,21 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
                 if(backCancelButton.getText().equals("Cancelar")){
                     firstCommand = "1";
+
+                    Fragment newFragment = new MainFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                    transaction.replace(R.id.fragment_container_fl, newFragment);
+                    transaction.addToBackStack(null);
+
+                    // Commit the transaction
+                    transaction.commit();
                 }
                 else {
+                    // Stop timer
+                    timerHandler.removeCallbacks(timerRunnable);
+
+                    // Send command to rasp to stop charging and open de cabin
                     rcClient.sendChargeStep("4|null");
                 }
             }
