@@ -72,6 +72,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
     private ImageView facialRecognitionInstruction1;
     private ImageView facialRecognitionInstruction2;
     private ImageView facialRecognitionInstruction3;
+    private TextView paymentText;
     private TextView instructionsText;
     private TextView timer;
 
@@ -182,18 +183,23 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
                                 // Receiving if the removal was successful (true or false)
                             case "5":
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        instructionsText.setText("Rosto reconhecido");
-                                    }
-                                });
 
                                 Log.d(TAG, "Server data -> " + serverData);
                                 Log.d(TAG, "Finishing connection");
 
                                 if(serverData.equals("True")){
-                                    payment();
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            int real = value/100;
+                                            int cent = value - real*100;
+                                            timer.setVisibility(View.GONE);
+                                            paymentText.setVisibility(View.VISIBLE);
+                                            paymentText.setText(String.format("Valor: %d,%2d R$", real, cent));
+                                            instructionsText.setText("Rosto reconhecido!");
+                                            backCancelButton.setText("Realizar Pagamento");
+                                        }
+                                    });
                                 }
                                 else {
                                     rcClient.sendChargeStep("5|"+userDAO.getUser().getCabin());
@@ -220,6 +226,11 @@ public class CharginProcessFragment extends Fragment implements Observer {
                                 isRunning = false;
 
                                 rcClient.closeUp();
+
+                                userDAO.getUser().setCabin("0");
+                                userDAO.getUser().setChargeTime(0);
+                                updateApi();
+
                                 startActivity(new Intent(getActivity(), LoginActivity.class));
                                 getActivity().finish();
                             default:
@@ -281,6 +292,15 @@ public class CharginProcessFragment extends Fragment implements Observer {
         facialRecognitionInstruction1.setVisibility(View.VISIBLE);
         facialRecognitionInstruction2.setVisibility(View.VISIBLE);
         facialRecognitionInstruction3.setVisibility(View.VISIBLE);
+    }
+
+    private void showPaymentButton(){
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
     }
 
     private void showConfirmButton(){
@@ -541,6 +561,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
         closeCabinButton = view.findViewById(R.id.close_cabin_bt);
         instructionsText = view.findViewById(R.id.instructions_tv);
         timer = view.findViewById(R.id.timer_tv);
+        paymentText = view.findViewById(R.id.value_tv);
         logOutButton = view.findViewById(R.id.logout_bt);
 
         if(userDAO.getUser().getChargeTime() == 0){
@@ -569,14 +590,19 @@ public class CharginProcessFragment extends Fragment implements Observer {
                 facialRecognitionInstruction3.setVisibility(View.GONE);
                 closeCabinButton.setVisibility(View.GONE);
                 logOutButton.setVisibility(View.GONE);
-
-                userDAO.getUser().setChargeTime(0);
-                updateApi();
+                paymentText.setVisibility(View.GONE);
 
                 if(backCancelButton.getText().equals("Cancelar") || backCancelButton.getText().equals("Voltar")){
                     firstCommand = "1";
 
-                    rcClient.closeUp();
+                    if(rcClient != null) {
+                        rcClient.closeUp();
+                    }
+
+                    userDAO.getUser().setCabin("0");
+                    userDAO.getUser().setChargeTime(0);
+                    updateApi();
+
                     Fragment newFragment = new MainFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
@@ -592,9 +618,13 @@ public class CharginProcessFragment extends Fragment implements Observer {
                     // Send command to rasp to stop charging and open de cabin.
                     rcClient.sendChargeStep("5|"+userDAO.getUser().getCabin());
                 }
+                else if (backCancelButton.getText().equals("Realizar Pagamento")) {
+                    payment();
+                }
                 else if (backCancelButton.getText().equals("Confirmar Retirada")){
                     rcClient.sendChargeStep("7|"+userDAO.getUser().getCabin());
                 }
+
             }
         });
 

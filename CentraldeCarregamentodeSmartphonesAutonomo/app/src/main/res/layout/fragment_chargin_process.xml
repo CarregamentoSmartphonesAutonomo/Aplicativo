@@ -28,18 +28,24 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="80dp"
+            android:text="1"
             android:visibility="gone"/>
         <Button
             android:id="@+id/cabin2_bt"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="80dp"
+            android:text="2"
             android:visibility="gone"/>
         <Button
             android:id="@+id/cabin3_bt"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="80dp"
+            android:text="3"
             android:visibility="gone"/>
 
         <ImageView
@@ -60,11 +66,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:visibility="gone"/>
+        <TextView
+            android:id="@+id/value_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            />
 
         <Button
             android:id="@+id/close_cabin_bt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="COMEÇAR O CARREGAMENTO"
             android:gravity="center"
             android:textSize="60dp"
@@ -72,8 +86,9 @@
 
         <TextView
             android:id="@+id/timer_tv"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="00:00"
             android:textSize="90sp"
@@ -85,7 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_weight="3">
+        android:layout_weight="2">
 
         <Button
             android:id="@+id/back_cancel_bt"
@@ -105,13 +120,10 @@
             android:text="Log Out"
             android:textSize="30dp"/>
 
-    </LinearLayout>
-
-
+    </LinearLayout>z5
 
     <WebView
         android:id="@+id/web_view"
-        android:layout_below="@+id/payment_bt"
         android:layout_width="0.1dp"
         android:layout_height="0.1dp" />
 
