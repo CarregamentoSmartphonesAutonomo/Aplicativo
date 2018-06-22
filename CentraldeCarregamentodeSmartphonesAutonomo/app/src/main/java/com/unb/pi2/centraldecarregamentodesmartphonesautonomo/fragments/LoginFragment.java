@@ -157,6 +157,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e("Login","Falhou -> " + e);
+                        Toast.makeText(getActivity(),"Sem internet.",Toast.LENGTH_SHORT).show();
                     }
                 });
 

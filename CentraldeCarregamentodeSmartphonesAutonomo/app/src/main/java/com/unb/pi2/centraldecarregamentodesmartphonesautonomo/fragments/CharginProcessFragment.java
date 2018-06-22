@@ -77,6 +77,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
     private String firstCommand;
     private String cabinChosen;
+    private String id;
 
 
     Thread thread = new Thread(new Runnable() {
@@ -85,6 +86,8 @@ public class CharginProcessFragment extends Fragment implements Observer {
         public void run() {
             Log.d("ChargingProcessFragment","Thread run -> starting connection...");
             rcClient = new RCClient();
+
+            id = userDAO.getUser().getCpf().substring(0, 4);
 
             // Send first command to raspberry
             rcClient.sendChargeStep(firstCommand+"|"+userDAO.getUser().getCabin());
@@ -139,11 +142,15 @@ public class CharginProcessFragment extends Fragment implements Observer {
                                     });
                                 }
 
+
+
                                 if(serverData.equals("True")){
-                                    rcClient.sendChargeStep("3|Dario,01," + userDAO.getUser().getCabin());
+                                    rcClient.sendChargeStep("3|" +userDAO.getUser().getName() + "," +
+                                            id + "," + userDAO.getUser().getCabin());
                                 }
                                 else {
-                                    rcClient.sendChargeStep("2|01");
+                                    //Toast
+                                    rcClient.sendChargeStep("2|" + id);
                                 }
 
                                 continue;
@@ -188,6 +195,9 @@ public class CharginProcessFragment extends Fragment implements Observer {
                                 if(serverData.equals("True")){
                                     payment();
                                 }
+                                else {
+                                    rcClient.sendChargeStep("5|"+userDAO.getUser().getCabin());
+                                }
                                 // Finishing connection.
                                 //rcClient.sendChargeStep("f|null");
 
@@ -208,15 +218,10 @@ public class CharginProcessFragment extends Fragment implements Observer {
                                 continue;
                             case "7":
                                 isRunning = false;
+
                                 rcClient.closeUp();
-                                Fragment newFragment = new MainFragment();
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-                                transaction.replace(R.id.fragment_container_fl, newFragment);
-                                transaction.addToBackStack(null);
-
-                                // Commit the transaction
-                                transaction.commit();
+                                startActivity(new Intent(getActivity(), LoginActivity.class));
+                                getActivity().finish();
                             default:
                                 Log.d(TAG, "Command not found.");
                                 //isRunning = false;
@@ -571,6 +576,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
                 if(backCancelButton.getText().equals("Cancelar") || backCancelButton.getText().equals("Voltar")){
                     firstCommand = "1";
 
+                    rcClient.closeUp();
                     Fragment newFragment = new MainFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
@@ -579,13 +585,12 @@ public class CharginProcessFragment extends Fragment implements Observer {
 
                     // Commit the transaction
                     transaction.commit();
-                    rcClient.sendChargeStep("5|"+cabinChosen);
                 }
                 else if(backCancelButton.getText().equals("Terminar Carregamento")) {
                     // Stop timer
                     timerHandler.removeCallbacks(timerRunnable);
                     // Send command to rasp to stop charging and open de cabin.
-                    rcClient.sendChargeStep("5|"+cabinChosen);
+                    rcClient.sendChargeStep("5|"+userDAO.getUser().getCabin());
                 }
                 else if (backCancelButton.getText().equals("Confirmar Retirada")){
                     rcClient.sendChargeStep("7|"+userDAO.getUser().getCabin());
@@ -601,7 +606,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
                 cabinChosen = "1";
                 userDAO.getUser().setCabin(cabinChosen);
                 updateApi();
-                rcClient.sendChargeStep("2|01"/*+userDAO.getUser().getcpf()*/);
+                rcClient.sendChargeStep("2|" + id);
                 instructionsText.setText("Obtendo imagens para reconhecimento facial, aguarde...");
                 showFacialRecognitionIntructions();
             }
@@ -614,7 +619,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
                 cabinChosen = "2";
                 userDAO.getUser().setCabin(cabinChosen);
                 updateApi();
-                rcClient.sendChargeStep("2|01");
+                rcClient.sendChargeStep("2|" + id);
                 instructionsText.setText("Obtendo imagens para reconhecimento facial, aguarde...");
                 showFacialRecognitionIntructions();
             }
@@ -627,7 +632,7 @@ public class CharginProcessFragment extends Fragment implements Observer {
                 cabinChosen = "3";
                 userDAO.getUser().setCabin(cabinChosen);
                 updateApi();
-                rcClient.sendChargeStep("2|01");
+                rcClient.sendChargeStep("2|" + id);
                 instructionsText.setText("Obtendo imagens para reconhecimento facial, aguarde...");
                 showFacialRecognitionIntructions();
             }

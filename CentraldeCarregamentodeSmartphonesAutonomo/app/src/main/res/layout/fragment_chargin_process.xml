@@ -81,23 +81,33 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/logout_bt"
-        android:layout_width="300dp"
-        android:layout_gravity="center_horizontal"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:text="Log Out"
-        android:textSize="30dp"/>
+        android:orientation="horizontal"
+        android:layout_weight="3">
 
-    <Button
-        android:id="@+id/back_cancel_bt"
-        android:layout_width="300dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="match_parent"
-        android:text="Cancelar"
-        android:textSize="30dp"
-        android:layout_weight="3"/>
+        <Button
+            android:id="@+id/back_cancel_bt"
+            android:layout_width="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="match_parent"
+            android:text="Cancelar"
+            android:textSize="30dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/logout_bt"
+            android:layout_width="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Log Out"
+            android:textSize="30dp"/>
+
+    </LinearLayout>
+
+
 
     <WebView
         android:id="@+id/web_view"

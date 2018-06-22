@@ -14,12 +14,12 @@
         android:theme="@style/AppTheme">
 
         <activity android:name="com.cooltechworks.creditcarddesign.CardEditActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             />
 
         <activity android:name=".LoginActivity"
                   android:theme="@style/Theme.AppCompat.NoActionBar"
-                  android:screenOrientation="portrait">
+                  android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +29,7 @@
         <activity android:name=".MainActivity"
                   android:theme="@style/Theme.AppCompat.NoActionBar"
                   android:label="Central de Carregamento de Smartphones Autonôma"
-                  android:screenOrientation="portrait">
+                  android:screenOrientation="landscape">
 
         </activity>
     </application>

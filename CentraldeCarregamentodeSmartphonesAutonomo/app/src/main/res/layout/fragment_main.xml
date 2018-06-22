@@ -11,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,8 +39,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView2"
@@ -53,10 +53,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
-                app:seriesData="0=5;2=5;3=0;4=2"
-                app:seriesType="line"
                 app:seriesColor="#ee0000"
-                />
+                app:seriesData="0=5;2=5;3=0;4=2"
+                app:seriesType="line" />
         </LinearLayout>
     </LinearLayout>
 
@@ -66,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="bottom"
-        android:background="#4169E1"
+        android:background="@color/actionButton"
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/start_charging_button"

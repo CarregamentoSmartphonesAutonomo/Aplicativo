@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_centerInParent="true"
     android:layout_centerVertical="true"
@@ -12,25 +12,27 @@
     <LinearLayout
         android:id="@+id/user_login_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingTop="56dp">
+        android:padding="30dp">
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="100dp"
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="4"
             android:layout_gravity="top|center_horizontal"
-            android:layout_marginBottom="30dp"
-            android:src="@mipmap/cacelu" />
+            android:src="@drawable/logo"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"/>
 
         <EditText
             android:id="@+id/login_email_et"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:textColor="@android:color/white"
@@ -38,9 +40,9 @@
 
         <EditText
             android:id="@+id/login_password_et"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:hint="Senha"
             android:inputType="numberPassword"
             android:textColor="@android:color/white"
@@ -48,18 +50,21 @@
 
         <Button
             android:id="@+id/login_bt"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_width="400dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="20dp"
+            android:layout_gravity="center_horizontal"
             android:background="@color/colorAccent"
             android:text="Entrar"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/user_register_tv"
-            android:layout_width="fill_parent"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
             android:background="@null"
             android:text="Não possui uma conta? Cadastre-se aqui!"
             android:textAllCaps="false"
@@ -68,9 +73,10 @@
 
         <Button
             android:id="@+id/send_email"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
+            android:layout_width="400dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
             android:background="@null"
             android:text="Esqueceu sua senha? Clique aqui!"
             android:textAllCaps="false"

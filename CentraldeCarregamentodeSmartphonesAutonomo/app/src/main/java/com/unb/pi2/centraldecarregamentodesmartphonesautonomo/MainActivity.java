@@ -1,6 +1,7 @@
 package com.unb.pi2.centraldecarregamentodesmartphonesautonomo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -34,9 +35,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            toolbar.setElevation(4.f);
+            toolbar.setElevation(6.f);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorToolbar));
         }
-        toolbar.setLogo(R.drawable.googleg_standard_color_18);
+        toolbar.setLogo(R.drawable.minilogo);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.colorBackground));
+
 
         // Create a new Fragment to be placed in the activity layout
         MainFragment firstFragment = new MainFragment();

@@ -43,6 +43,9 @@ dependencies {
 
     // Graphs
     implementation 'com.jjoe64:graphview:4.2.2'
+
+    // Layout
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
