@@ -130,12 +130,14 @@ public class CharginProcessFragment extends Fragment implements Observer {
                                 Log.d(TAG, "Server data -> " + serverData);
                                 Log.d(TAG, "Sending third command -> 3");
 
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        instructionsText.setText("Instruções:");
-                                    }
-                                });
+                                if(getActivity() != null){
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            instructionsText.setText("Instruções:");
+                                        }
+                                    });
+                                }
 
                                 if(serverData.equals("True")){
                                     rcClient.sendChargeStep("3|Dario,01," + userDAO.getUser().getCabin());

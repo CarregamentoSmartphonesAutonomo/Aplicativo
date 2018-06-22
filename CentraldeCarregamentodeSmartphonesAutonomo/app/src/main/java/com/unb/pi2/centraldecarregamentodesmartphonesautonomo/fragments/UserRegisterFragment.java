@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -75,8 +76,7 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                backToLogin();
             }
         });
 
@@ -98,6 +98,20 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
     }
 
     // ------------ Created Methods ------------
+    private void backToLogin(){
+        // Create new fragment and transaction
+        Fragment newFragment = new LoginFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack if needed
+        transaction.replace(R.id.fragment_container_fl, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
     private void registerUser(){
         final String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
@@ -106,7 +120,6 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
 
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(CPF) || TextUtils.isEmpty(name)){
             Toast.makeText(getActivity(),"É necessário preencher todos os campos",Toast.LENGTH_SHORT).show();
-            return;
         }
         else {
             final User user = new User(name,email,CPF,Integer.parseInt(password));
@@ -135,17 +148,19 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
                                     public void onSuccess(Void aVoid) {
                                         UserDAO userDao = UserDAO.getInstance();
                                         userDao.setUser(user);
-                                        Toast.makeText(getActivity(),"Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(),"Cadastro realizado com sucesso!",
+                                                Toast.LENGTH_SHORT).show();
+                                        backToLogin();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getActivity(),"Cadastro não realizado, por favor tente novamente...",
+                                                Toast.LENGTH_SHORT).show();
                                         Log.d("ERROR",  e.getMessage());
                                     }
                                 });
-
-
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
