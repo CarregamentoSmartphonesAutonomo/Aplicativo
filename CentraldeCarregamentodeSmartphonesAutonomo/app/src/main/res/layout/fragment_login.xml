@@ -6,7 +6,8 @@
     android:layout_centerInParent="true"
     android:layout_centerVertical="true"
     android:gravity="center"
-    tools:context="com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.LoginFragment">
+    tools:context="com.unb.pi2.centraldecarregamentodesmartphonesautonomo.fragments.LoginFragment"
+    android:background="@color/colorBackground">
 
     <LinearLayout
         android:id="@+id/user_login_ll"
@@ -52,7 +53,7 @@
             android:layout_marginTop="20dip"
             android:background="@color/colorAccent"
             android:text="Entrar"
-            android:textColor="@android:color/black" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/user_register_tv"
