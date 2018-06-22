@@ -125,6 +125,8 @@ public class UserRegisterFragment extends Fragment implements View.OnClickListen
                         newContact.put("name", name);
                         newContact.put("cpf", CPF);
                         newContact.put("email", email);
+                        newContact.put("chargeTime", 0);
+                        newContact.put("cabin","0");
 
                         db.collection("User").document(CPF)
                                 .set(newContact)

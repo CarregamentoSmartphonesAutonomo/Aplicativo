@@ -1,5 +1,7 @@
 package com.unb.pi2.centraldecarregamentodesmartphonesautonomo.Utils;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +11,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class RCClient {
+    private final String TAG = RCClient.class.getSimpleName();
     private static final String SERVER_IP = "10.3.141.1";
 
     public Socket getSocket() {
@@ -47,14 +50,14 @@ public class RCClient {
 
     public void closeUp() {
         try {
-            write(output, "FIN");
+            write(output, "FIN|null");
             String in = "";
-            while ((in = input.readLine()) != null) {
+            /*while ((in = input.readLine()) != null) {
                 if (in.equals("FIN-ACK")){ // Final-Acknowledge
                     break;
                 }
-            }
-            System.out.print("Closing socket.");
+            }*/
+            Log.d(TAG," -> Closing socket.");
             input.close();
             output.close();
             socket.close();

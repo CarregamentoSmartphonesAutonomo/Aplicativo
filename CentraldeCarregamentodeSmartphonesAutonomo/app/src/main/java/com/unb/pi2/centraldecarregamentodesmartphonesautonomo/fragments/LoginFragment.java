@@ -141,6 +141,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                                 User user;
                                 user = new User(doc.getString("name"), email,  doc.getString("cpf"), password);
                                 user.setChargeTime(doc.getLong("chargeTime"));
+                                user.setCabin(doc.getString("cabin"));
                                 userDao.setUser(user);
 
                                 Log.d("Login", "userDao -> " + userDao.getUser().getCpf());

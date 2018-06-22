@@ -80,6 +80,15 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/logout_bt"
+        android:layout_width="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:text="Log Out"
+        android:textSize="30dp"/>
+
+    <Button
         android:id="@+id/back_cancel_bt"
         android:layout_width="300dp"
         android:layout_gravity="center_horizontal"
@@ -87,6 +96,12 @@
         android:text="Cancelar"
         android:textSize="30dp"
         android:layout_weight="3"/>
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_below="@+id/payment_bt"
+        android:layout_width="0.1dp"
+        android:layout_height="0.1dp" />
 
 
 </LinearLayout>
